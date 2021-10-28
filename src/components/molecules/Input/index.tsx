@@ -37,7 +37,7 @@ export function Input(
 
   return (
     <>
-      <InputContainer style={styles.shadow}>
+      <InputContainer mt={25} style={styles.shadow}>
         <InputIcon>
           <Icon name="menu" size={40} color={colors.primary} />
         </InputIcon>

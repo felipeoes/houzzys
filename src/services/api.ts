@@ -34,7 +34,6 @@ const server = new TcpSocket.Server();
 export const client = new TcpSocket.Socket();
 
 export function initializeConnection() {
-  let received_list = false;
   server.on('connection', socket => {
     socket.write('Connection established\r\n');
   });

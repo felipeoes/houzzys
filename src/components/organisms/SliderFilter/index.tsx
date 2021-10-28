@@ -4,7 +4,6 @@ import Slider from 'react-native-sliders';
 import { AppRegistry } from 'react-native';
 import { colors } from '../../../styles/colors';
 import {
-  FilterSubtitle,
   SliderFilterContainer,
   SliderPriceView,
   SliderTextView,
@@ -19,11 +18,14 @@ export class SliderExample extends React.Component {
     y: 0,
   };
 
+  handleOnChangePrice() {
+    this.props.onChangePrice(this.state.value);
+  }
+
   render() {
     return (
       <>
         <SliderFilterContainer>
-          <FilterSubtitle>Price</FilterSubtitle>
           <SliderTextView>
             <SliderPriceView>
               <FilterSubText>Min: $100</FilterSubText>
@@ -41,7 +43,10 @@ export class SliderExample extends React.Component {
             step={100}
             maximumValue={20000}
             value={this.state.value}
-            onValueChange={value => this.setState({ value })}
+            onValueChange={value => {
+              this.setState({ value });
+              this.handleOnChangePrice();
+            }}
             thumbStyle={{
               borderRadius: 20,
               width: 25,

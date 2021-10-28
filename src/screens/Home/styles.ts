@@ -10,7 +10,7 @@ export const ScreenContainer = styled.View`
   background-color: white;
   width: 100%;
   height: 100%;
-  padding-top: ${({ theme }) => theme.metrics.px(4)}px;
+  padding-top: ${({ theme }) => theme.metrics.px(6)}px;
 `;
 
 export const ContentContainer = styled.View`

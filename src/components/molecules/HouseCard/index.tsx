@@ -41,7 +41,7 @@ export function HouseCard({
         <TextContainerLeft>
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
-          <CardHightLightText>U$ {Number(price).toFixed(2)}</CardHightLightText>
+          <CardHightLightText>U$ {Number(price)}/mo</CardHightLightText>
         </TextContainerLeft>
       </TextContainer>
     </CardContainer>
