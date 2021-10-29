@@ -1,4 +1,4 @@
-import { client, APIURL, APIKEY, APIHOST } from './api';
+import { client } from './api';
 
 export type PropertiesProps = {
   property_id: string;
@@ -48,30 +48,15 @@ export async function getHousesCall(
   filteringParams: FilteringParamsProps,
 ): Promise<PropertiesProps[]> {
   try {
-    const options = {
-      method: 'GET',
-      url: `${APIURL}/for-rent`,
-      params: {
-        city: 'Orlando',
-        state_code: 'FL',
-        // postal_code: '94105',
-        limit: '10',
-        offset: offset,
-      },
-      headers: {
-        'x-rapidapi-key': APIKEY,
-        'x-rapidapi-host': APIHOST,
-        useQueryString: true,
-      },
-    };
-
     let properties: PropertiesProps[] = [];
     client.write('properties list');
 
     client.on('data', (data: string | Buffer) => {
       try {
-        const object = JSON.parse(data);
+        let dataStr = data.toString();
+        const object = JSON.parse(dataStr);
         properties.push(object);
+        console.log(object);
       } catch (error) {
         console.log(error);
       }

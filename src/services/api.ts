@@ -1,22 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from 'axios';
-import { API_URL, XRAPIDAPI_KEY, XRAPIDAPI_HOST } from '@env';
 import TcpSocket from 'react-native-tcp-socket';
 import db from '../../db_us_estate.json'; // This import style requires "esModuleInterop", see "side notes"
 import { serialize } from 'react-serialize';
-
-export const APIURL = API_URL;
-export const APIKEY = XRAPIDAPI_KEY;
-export const APIHOST = XRAPIDAPI_HOST;
-
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'x-rapidapi-key': XRAPIDAPI_KEY,
-    'x-rapidapi-host': XRAPIDAPI_HOST,
-    useQueryString: true,
-  },
-});
 
 type ConnectionOptions = {
   port: number;
@@ -24,81 +9,19 @@ type ConnectionOptions = {
   reuseAddress?: boolean | undefined;
 };
 
+const host: string = 'SEU-IP';
+
 const options: ConnectionOptions = {
-  port: 14856,
-  host: 'localhost',
+  port: 29298,
+  host: host,
   reuseAddress: true,
 };
 
-const server = new TcpSocket.Server();
 export const client = new TcpSocket.Socket();
 
 export function initializeConnection() {
-  server.on('connection', socket => {
-    socket.write('Connection established\r\n');
-  });
-
-  server.listen(options, () => {
-    const port = server.address()?.port;
-    if (!port) {
-      throw new Error('Port not found');
-    }
-
-    client.connect(options, () => {
-      client.write('properties list');
-    });
-  });
-
-  server.on('connection', socket => {
-    console.log(
-      'Client connected to server on ' + JSON.stringify(socket.address()),
-    );
-
-    socket.on('data', data => {
-      console.log('Server client received: ' + data);
-      let msg: string = data.toString();
-
-      if (msg === 'properties list') {
-        const housesList = getHousesList();
-
-        housesList.forEach(house => {
-          const buffer = serialize(house);
-          socket.write(buffer);
-        });
-      }
-
-      if (msg.includes('property id=')) {
-        const property_id = msg.substring(12);
-        const property = getHousesDetail(property_id);
-
-        const buffer = serialize(property);
-        socket.write(buffer);
-      }
-
-      if (msg === 'locations suggestion') {
-        const keywordsList = getLocationsList();
-
-        keywordsList.forEach((location: string) => {
-          socket.write(location);
-        });
-      }
-    });
-
-    socket.on('error', error => {
-      console.log('Server client error ' + error);
-    });
-
-    socket.on('close', error => {
-      console.log('Server client closed ' + (error ? error : ''));
-    });
-  });
-
-  server.on('error', error => {
-    console.log('Server error ' + error);
-  });
-
-  server.on('close', () => {
-    console.log('Server closed');
+  client.connect(options, () => {
+    client.write('properties list');
   });
 
   client.on('connect', () => {
@@ -146,4 +69,3 @@ function getLocationsList() {
   });
   return locations;
 }
-export default server;
