@@ -1,4 +1,8 @@
-import { FilteringParamsProps, getHousesCall } from '../calls';
+import {
+  FilteringParamsProps,
+  getHousesCall,
+  getForSaleHousesCall,
+} from '../calls';
 import { useHousesStore } from '../stores';
 
 export const useHousesHooks = () => {
@@ -32,8 +36,17 @@ export const useHousesHooks = () => {
   ): Promise<void> {
     setLoadingHousesList(true);
     setParams(params);
-    const result = await getHousesCall(offset, { ...params });
-    setHousesList(result);
+
+    params.type = 'for_sale';
+    if (params.type === 'for_sale') {
+      const result = await getForSaleHousesCall(offset, { ...params });
+      console.log(
+        'entrei no for sale',
+        'quantidade de casas retornasdas' + result.length,
+      );
+      setHousesList(result);
+    }
+
     setLoadingHousesList(false);
   }
 
