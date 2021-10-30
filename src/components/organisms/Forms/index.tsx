@@ -32,10 +32,17 @@ export function Form({ onClose }) {
   }
 
   const [form, setForm] = useState({
+<<<<<<< HEAD
     beds: '0',
     price: [],
     baths: '0',
     garages: '0',
+=======
+    beds: '',
+    price: [],
+    baths: '',
+    garages: '',
+>>>>>>> c134ad70406fab515ded2d1832d97e7f16702238
   });
 
   const onPressApply = useCallback(() => {
