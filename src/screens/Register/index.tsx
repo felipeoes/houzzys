@@ -1,5 +1,5 @@
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { Button, DetailSubTitle, DetailText, Modal } from '../../components';
 import { ScreenContainer } from '../Home/styles';
@@ -10,36 +10,31 @@ import {
   RegisterHighlightText,
   InputContainer,
   RegisterHighlightTextContainer,
-} from './styles';
+} from '../Login/styles';
 
-type LoginModalProps = {
+type RegisterModalProps = {
   visible: boolean;
   onClose: () => void;
   navigation: () => void;
 };
 
-export function Login({ visible }: LoginModalProps) {
+export function Register({ visible }: RegisterModalProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
   const navigation = useNavigation();
-  // check if screen is focused
-  const isFocused = useIsFocused();
 
-  // listen for isFocused, if useFocused changes
-  // call the function that you use to mount the component.
-
-  useEffect(() => {
-    handleOnPressLogin();
-  }, [isFocused]);
-
-  function handleOnPressLogin() {
-    console.log(password);
+  function handleOnPressRegister() {
     console.log(username);
+    console.log(password);
+    console.log(passwordConfirm);
   }
 
-  function handleOnPressRegisterText() {
-    navigation.navigate('Register');
+  function handleOnPressLoginText() {
+    navigation.navigate('SliderScreens');
   }
+
   return (
     <ScreenContainer>
       <ImageBackground
@@ -47,9 +42,9 @@ export function Login({ visible }: LoginModalProps) {
         source={require('../../assets/image/welcome.png')}
       />
       <Modal
-        title="Sign In"
+        title="Register"
         visible={visible}
-        onClose={() => navigation.goBack()}
+        onClose={() => handleOnPressLoginText()}
         width={500}
         bRight={60}
         bLeft={60}>
@@ -60,7 +55,7 @@ export function Login({ visible }: LoginModalProps) {
             <DetailSubTitle mb={-5}>Email</DetailSubTitle>
             <LoginInput
               style={styles.shadow}
-              placeholder="Digite o seu email"
+              placeholder="Type your email"
               onChangeText={value => setUsername(value)}
             />
           </InputContainer>
@@ -71,22 +66,35 @@ export function Login({ visible }: LoginModalProps) {
             <DetailSubTitle mb={-5}>Password</DetailSubTitle>
             <LoginInput
               style={styles.shadow}
-              placeholder="Digite a sua senha"
+              placeholder="Type your password"
               onChangeText={value => setPassword(value)}
               secureTextEntry
             />
           </InputContainer>
+        </LoginContainer>
+
+        <LoginContainer>
+          <InputContainer>
+            <LoginInput
+              style={styles.shadow}
+              placeholder="Confirm your password"
+              onChangeText={value => setPasswordConfirm(value)}
+              secureTextEntry
+            />
+          </InputContainer>
+
           <Button
-            text="Login"
+            text="Register"
             mt={30}
             height={70}
-            onPress={() => handleOnPressLogin}
+            onPress={handleOnPressRegister}
           />
         </LoginContainer>
+
         <DetailText mt={15}>
-          Don't have an account yet?
-          <RegisterHighlightTextContainer onPress={handleOnPressRegisterText}>
-            <RegisterHighlightText>{''} Register now!</RegisterHighlightText>
+          Already have an account?
+          <RegisterHighlightTextContainer onPress={handleOnPressLoginText}>
+            <RegisterHighlightText>Click here to log in!</RegisterHighlightText>
           </RegisterHighlightTextContainer>
         </DetailText>
       </Modal>

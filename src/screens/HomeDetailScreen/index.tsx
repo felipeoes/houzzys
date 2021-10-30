@@ -46,7 +46,6 @@ export function HomeDetailScreen() {
   let nIntervId;
 
   function fetchHouseDetails() {
-    // check if already an interval has been set up
     if (!nIntervId) {
       nIntervId = setInterval(getHouseDetails, 1000);
     }
@@ -94,14 +93,8 @@ export function HomeDetailScreen() {
       setLoading(false);
     }, 3000);
 
-    console.log('HOUSEDETAIL AQUI', houseDetail);
     checkIfHouseIsFavorite();
   }, [selectedHouse]);
-
-  // useEffect(() => {
-  //   getHouseDetails();
-  //   checkIfHouseIsFavorite();
-  // }, []);
 
   return (
     <ScreenContainer>
@@ -144,6 +137,7 @@ export function HomeDetailScreen() {
                 houseDetail.list_price_max ? houseDetail.list_price_max : 0,
               ).toFixed(2)}
             </DetailSubTitle>
+
             <ScreenLine />
             <DetailSectionTitle mt={24} mb={12}>
               Details

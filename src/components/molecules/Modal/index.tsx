@@ -46,7 +46,12 @@ export function Modal({
           </BottomScreenContainer>
         </ModalBackground>
       )}
-      <BottomScreenContainer width={width} bRight={bRight} bLeft={bLeft}>
+      <BottomScreenContainer
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        width={width}
+        bRight={bRight}
+        bLeft={bLeft}>
         <IconView onPress={onClose}>
           <Icon name="close" size={30} />
         </IconView>

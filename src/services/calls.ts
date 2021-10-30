@@ -1,4 +1,5 @@
 import { client } from './api';
+import { Buffer } from 'buffer';
 
 export type PropertiesProps = {
   property_id: string;
@@ -53,7 +54,8 @@ export async function getHousesCall(
 
     client.on('data', (data: string | Buffer) => {
       try {
-        let dataStr = data.toString();
+        let buffer = Buffer.from(data);
+        let dataStr = buffer.toString('utf-8');
         const object = JSON.parse(dataStr);
         properties.push(object);
         console.log(object);

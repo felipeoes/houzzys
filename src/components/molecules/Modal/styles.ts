@@ -51,9 +51,9 @@ export const IconView = styled.TouchableOpacity`
 `;
 
 export const HeaderContainer = styled.View`
-  display: flex;
-  flex-direction: row;
+  flex: 1;
   align-items: center;
   justify-content: center;
   width: 100%;
+  position: absolute;
 `;

@@ -9,7 +9,7 @@ type ConnectionOptions = {
   reuseAddress?: boolean | undefined;
 };
 
-const host: string = 'SEU-IP';
+const host: string = '192.168.0.39';
 
 const options: ConnectionOptions = {
   port: 29298,
@@ -21,7 +21,7 @@ export const client = new TcpSocket.Socket();
 
 export function initializeConnection() {
   client.connect(options, () => {
-    client.write('properties list');
+    client.write('Client connected');
   });
 
   client.on('connect', () => {

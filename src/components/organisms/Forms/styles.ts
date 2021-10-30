@@ -18,7 +18,7 @@ export const FeatureInputContainer = styled.View`
   flex-direction: row;
   width: ${({ theme }) => theme.metrics.px(120)}px;
   height: ${({ theme }) => theme.metrics.px(35)}px;
-  border-radius: ${({ theme }) => theme.metrics.px(8)}px;
+
   background: #d3dde6;
 `;
 
@@ -27,10 +27,10 @@ export const FeatureInput = styled.TextInput`
   justify-content: center;
   text-align: center;
 
-  font-family: ${({ theme }) => theme.fonts.montserrat.regular};
+  font-family: ${({ theme }) => theme.fonts.montserrat.bold};
   width: ${({ theme }) => theme.metrics.px(40)}px;
-  background: #323e70;
-  color: white;
+  background-color: #ffffff;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const FeatureIconContainer = styled.View`
@@ -39,9 +39,25 @@ export const FeatureIconContainer = styled.View`
   width: ${({ theme }) => theme.metrics.px(40)}px;
 `;
 
-export const IconButtoncontainer = styled.TouchableOpacity`
+export const IconMinuscontainer = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: ${({ theme }) => theme.metrics.px(40)}px;
+  height: 100%;
+  background-color: #f4f4f4;
+`;
+
+export const IconPluscontainer = styled.TouchableOpacity`
+  align-items: center;
+  justify-content: center;
+  width: ${({ theme }) => theme.metrics.px(40)}px;
+  height: 100%;
+`;
+
+export const FormButtonContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 100%;
 `;

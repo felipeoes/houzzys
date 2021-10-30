@@ -5,6 +5,7 @@ import {
   TitleContainer,
   ContentContainer,
   InputContainer,
+  HeaderContainer,
 } from './styles';
 import {
   Title,
@@ -13,9 +14,15 @@ import {
   Loading,
   HousesList,
   FilterModal,
+  DetailText,
 } from '../../components/index';
 import { useHousesHooks } from '../../services/hooks';
 import { useHousesStore } from '../../services/stores';
+import { InputIcon } from '../../components/molecules/Input/styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Dropdown } from '../../components/molecules/DropdownMenu';
+
+import { colors } from '../../styles/colors';
 
 export function HomeScreen() {
   const { onGetHouses } = useHousesHooks();
@@ -38,9 +45,18 @@ export function HomeScreen() {
         loading={loadingHousesList}
         onEndReached={onGetHouses}>
         <ContentContainer>
-          <InputContainer>
-            <Input placeholder="Type the address" housesList={housesList} />
-          </InputContainer>
+          <HeaderContainer>
+            <InputIcon>
+              <Icon name="user-circle" size={35} color={colors.primary} />
+              {/* <DetailText>
+                {''} Profile
+                <Icon name="chevron-down" size={16} color={colors.primary} /> *
+              </DetailText> */}
+            </InputIcon>
+            <InputContainer>
+              <Input placeholder="Type the address" housesList={housesList} />
+            </InputContainer>
+          </HeaderContainer>
 
           <TopContainer>
             <TitleContainer>

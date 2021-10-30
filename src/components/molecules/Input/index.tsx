@@ -1,10 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInputProps } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors } from '../../../styles/colors';
 
-import { InputContainer, InputText, InputIcon } from './styles';
+import {
+  InputContainer,
+  InputText,
+  InputIcon,
+  InputTextContainer,
+  InputIconContainer,
+} from './styles';
 // import Autocomplete from 'react-native-autocomplete-input';
 
 type InputProps = {
@@ -38,9 +44,6 @@ export function Input(
   return (
     <>
       <InputContainer mt={25} style={styles.shadow}>
-        <InputIcon>
-          <Icon name="menu" size={40} color={colors.primary} />
-        </InputIcon>
         {/* <Autocomplete
           autoCapitalize="none"
           autoCorrect={false}
@@ -69,12 +72,17 @@ export function Input(
             </TouchableOpacity>
           )}
         /> */}
-        <InputText
-          style={styles.shadow}
-          {...props}
-          placeholder={placeholder}
-          placeholderTextColor="black"
-        />
+        <InputTextContainer>
+          <InputIconContainer>
+            <Icon name="search" size={14} color={colors.primary} />
+          </InputIconContainer>
+          <InputText
+            style={styles.shadow}
+            {...props}
+            placeholder={placeholder}
+            placeholderTextColor="#828282"
+          />
+        </InputTextContainer>
       </InputContainer>
     </>
   );

@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const ScreenScroll = styled.ScrollView``;
 
-export const ScreenContainer = styled.View`
+export const ScreenContainer = styled.SafeAreaView`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -40,4 +40,10 @@ export const TitleContainer = styled.View`
   flex: 1;
   flex-direction: row;
   width: 65%;
+`;
+
+export const HeaderContainer = styled.SafeAreaView`
+  flex: 1;
+  justify-content: space-between;
+  flex-direction: row;
 `;

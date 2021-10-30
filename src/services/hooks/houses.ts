@@ -33,7 +33,7 @@ export const useHousesHooks = () => {
     setLoadingHousesList(true);
     setParams(params);
     const result = await getHousesCall(offset, { ...params });
-    setHousesList(result.data.home_search.results);
+    setHousesList(result);
     setLoadingHousesList(false);
   }
 

@@ -5,6 +5,8 @@ import { ButtonContainer } from './styles';
 type ButtonProps = {
   text: string;
   mt: number;
+  width?: number;
+  height?: number;
   onPress: () => void;
 };
 

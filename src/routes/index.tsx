@@ -6,6 +6,7 @@ import {
   SliderScreens,
   HomeDetailScreen,
   Login,
+  Register,
 } from '../screens';
 
 export function Navigator() {
@@ -18,6 +19,7 @@ export function Navigator() {
       <Stack.Screen name="SliderScreens" component={SliderScreens} />
       <Stack.Screen name="HomeDetailScreen" component={HomeDetailScreen} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
     </Stack.Navigator>
   );
 }
