@@ -19,10 +19,7 @@ export const InputContainer = styled.View<InputContainerProps>`
   margin-left: ${({ theme, ml }) => theme.metrics.px(ml || 0)}px;
   margin-right: ${({ theme, mr }) => theme.metrics.px(mr || 0)}px;
 `;
-export const InputIcon = styled.TouchableOpacity`
-  height: ${({ theme }) => theme.metrics.px(40)}px;
-  width: ${({ theme }) => theme.metrics.px(50)}px;
-  margin-top: ${({ theme }) => theme.metrics.px(36)}px
+export const InputIcon = styled.View`
   background-color: white;
   flex-direction: row;
   align-items: center;
@@ -45,6 +42,7 @@ export const InputText = styled.TextInput`
 `;
 
 export const InputTextContainer = styled.SafeAreaView`
+  width: ${({ theme }) => theme.metrics.px(320)}px;
   flex-direction: row;
 `;
 

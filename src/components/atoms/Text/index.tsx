@@ -5,6 +5,7 @@ type BaseTextProps = {
   mb?: number;
   ml?: number;
   mr?: number;
+  fs?: number;
 };
 
 export const BaseText = styled.Text<BaseTextProps>`
@@ -31,7 +32,7 @@ export const InputLabel = styled(BaseText)`
   font-family: 'Montserrat-SemiBold';
 `;
 export const ButtonText = styled(BaseText)`
-  font-size: ${({ theme }) => theme.metrics.px(22)}px;
+  font-size: ${({ theme, fs }) => theme.metrics.px(fs || 22)}px;
   color: white;
   font-family: 'Montserrat-Bold';
 `;

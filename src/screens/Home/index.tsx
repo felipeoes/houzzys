@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   ScreenContainer,
@@ -12,30 +13,49 @@ import {
   Input,
   IconButton,
   Loading,
-  HousesList,
   FilterModal,
-  DetailText,
 } from '../../components/index';
 import { useHousesHooks } from '../../services/hooks';
 import { useHousesStore } from '../../services/stores';
-import { InputIcon } from '../../components/molecules/Input/styles';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { Dropdown } from '../../components/molecules/DropdownMenu';
 
-import { colors } from '../../styles/colors';
+import HousesList from '../../components/organisms/HousesList';
+import { LocationsModal } from '../../components/organisms/LocationsModal';
+
+function InputModal({ housesList, onPress }) {
+  return (
+    <InputContainer>
+      <Input
+        placeholder="Type the address"
+        housesList={housesList}
+        onPressIn={onPress}
+      />
+    </InputContainer>
+  );
+}
 
 export function HomeScreen() {
   const { onGetHouses } = useHousesHooks();
   const { housesList, loadingHousesList } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [locationsModalVisible, setLocationsModalVisible] = useState(false);
 
   const toggleFilterModal = useCallback(() => {
     setFilterModalVisible(prevState => !prevState);
   }, []);
 
+  const toggleLocationsModal = useCallback(() => {
+    setLocationsModalVisible(prevState => !prevState);
+  }, []);
+
+  let firstTime = true;
+
   useEffect(() => {
+    setTimeout(() => {
+      if (firstTime) {
+        firstTime = false;
+      }
+    }, 2000);
     onGetHouses();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -46,16 +66,17 @@ export function HomeScreen() {
         onEndReached={onGetHouses}>
         <ContentContainer>
           <HeaderContainer>
-            <InputIcon>
-              <Icon name="user-circle" size={35} color={colors.primary} />
-              {/* <DetailText>
-                {''} Profile
-                <Icon name="chevron-down" size={16} color={colors.primary} /> *
-              </DetailText> */}
-            </InputIcon>
-            <InputContainer>
-              <Input placeholder="Type the address" housesList={housesList} />
-            </InputContainer>
+            <InputModal
+              housesList={housesList}
+              onPress={toggleLocationsModal}
+            />
+            {/* <InputContainer>
+              <Input
+                placeholder="Type the address"
+                housesList={housesList}
+                onPressIn={toggleLocationsModal}
+              />
+            </InputContainer> */}
           </HeaderContainer>
 
           <TopContainer>
@@ -74,6 +95,13 @@ export function HomeScreen() {
       </HousesList>
       {filterModalVisible && (
         <FilterModal visible={filterModalVisible} onClose={toggleFilterModal} />
+      )}
+      {locationsModalVisible && (
+        <LocationsModal
+          visible={locationsModalVisible}
+          onClose={toggleLocationsModal}
+          inputModal={InputModal({ housesList })}
+        />
       )}
     </ScreenContainer>
   );

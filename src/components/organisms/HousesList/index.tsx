@@ -10,7 +10,7 @@ type HousesListProps = {
   onEndReached: () => Promise<void>;
 };
 
-export function HousesList({
+function HousesList({
   data,
   children,
   loading,
@@ -47,3 +47,5 @@ export function HousesList({
     />
   );
 }
+
+export default React.memo(HousesList);

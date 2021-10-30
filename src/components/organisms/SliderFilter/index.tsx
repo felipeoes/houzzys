@@ -12,11 +12,22 @@ import { CardHightLightText } from '../../index';
 import { FilterSubText } from '../FilterModal/styles';
 
 export class SliderExample extends React.Component {
+  min = this.props.min;
+  max = this.props.max;
+  step = this.props.step;
+
   state = {
-    value: [100, 20000],
+    value: [this.min, this.max],
     x: 0,
     y: 0,
   };
+
+  handleOnChangeMinMax(minValue?, maxValue?) {
+    if (minValue && maxValue) {
+      this.min = minValue;
+      this.max = maxValue;
+    }
+  }
 
   handleOnChangePrice() {
     this.props.onChangePrice(this.state.value);
@@ -28,20 +39,20 @@ export class SliderExample extends React.Component {
         <SliderFilterContainer>
           <SliderTextView>
             <SliderPriceView>
-              <FilterSubText>Min: $100</FilterSubText>
+              <FilterSubText>Min: ${this.min}</FilterSubText>
               <CardHightLightText>${this.state.value[0]}</CardHightLightText>
             </SliderPriceView>
             <SliderPriceView>
-              <FilterSubText>Max: $20000</FilterSubText>
+              <FilterSubText>Max: ${this.max}</FilterSubText>
               <CardHightLightText>${this.state.value[1]}</CardHightLightText>
             </SliderPriceView>
           </SliderTextView>
 
           <Slider
             style={{ width: '100%', height: 100 }}
-            minimumValue={100}
-            step={100}
-            maximumValue={20000}
+            minimumValue={this.min}
+            step={this.step}
+            maximumValue={this.max}
             value={this.state.value}
             onValueChange={value => {
               this.setState({ value });

@@ -15,12 +15,14 @@ import { colors } from '../../../styles/colors';
 import { useHousesHooks } from '../../../services/hooks/houses';
 import { SliderExample } from '../SliderFilter';
 import { FilterSubtitle } from '../FilterModal/styles';
+import { StyleSheet } from 'react-native';
 
 type FormProps = {
   onClose: () => void;
+  type: string;
 };
 
-export function Form({ onClose }) {
+export function Form({ onClose, type }) {
   const { onFilterHouseList } = useHousesHooks();
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(0);
@@ -38,6 +40,12 @@ export function Form({ onClose }) {
     garages: '',
   });
 
+  // function checkDisabledButton(card: any) {
+  //   if (card.value > 0) {
+  //     setDisabled(false);
+  //   }
+  //   return card.value <= 0;
+  // }
   const onPressApply = useCallback(() => {
     onFilterHouseList(form);
     onClose();
@@ -94,6 +102,7 @@ export function Form({ onClose }) {
   ];
 
   cards.forEach(card => {
+    let disabled = Number(card.value) <= 0;
     cardsList.push(
       <FilterCardContainer>
         <FeatureDescriptionContainer>
@@ -106,8 +115,14 @@ export function Form({ onClose }) {
         </FeatureDescriptionContainer>
         <FeatureInputContainer>
           <IconMinuscontainer
+            disabled={disabled}
+            style={disabled && styles.buttonDisabled}
             onPress={() => handleForm(card.value, card.field, 'decrement')}>
-            <IconFontAwesome name="minus" size={16} color={colors.terciary} />
+            <IconFontAwesome
+              name="minus"
+              size={16}
+              color={disabled ? 'white' : colors.terciary}
+            />
           </IconMinuscontainer>
           <FeatureInput
             onChangeText={value => handleForm(value, card.field)}
@@ -129,7 +144,25 @@ export function Form({ onClose }) {
   return (
     <>
       <FilterSubtitle>Price</FilterSubtitle>
-      <SliderExample onChangePrice={handleOnChangePrice} />
+      {type === true && (
+        <SliderExample
+          onChangePrice={handleOnChangePrice}
+          type={type}
+          min={100}
+          max={20000}
+          step={100}
+        />
+      )}
+      {type === false && (
+        <SliderExample
+          onChangePrice={handleOnChangePrice}
+          type={type}
+          min={50000}
+          max={1000000}
+          step={1000}
+        />
+      )}
+
       <FilterSubtitle>Features</FilterSubtitle>
       {cardsList}
       <FormButtonContainer>
@@ -138,3 +171,9 @@ export function Form({ onClose }) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonDisabled: {
+    backgroundColor: '#f4f4f4',
+  },
+});

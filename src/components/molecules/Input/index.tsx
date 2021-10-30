@@ -43,7 +43,7 @@ export function Input(
 
   return (
     <>
-      <InputContainer mt={25} style={styles.shadow}>
+      <InputContainer ml={12} mt={30} style={styles.shadow}>
         {/* <Autocomplete
           autoCapitalize="none"
           autoCorrect={false}

@@ -3,6 +3,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  Button,
   DetailSectionTitle,
   DetailSubTitle,
   DetailText,
@@ -20,6 +21,8 @@ import {
   ScreenContainer,
   HomeFeaturesContainer,
   ScreenLine,
+  ProposalCard,
+  ProposalCardTextContainer,
 } from './styles';
 import {
   getIfHouseIsFavorite,
@@ -27,7 +30,7 @@ import {
   removeHouseAsFavorite,
 } from '../../services/stores/db';
 
-import { Alert } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 
 export function HomeDetailScreen() {
   const { selectedHouse } = useHousesStore();
@@ -82,6 +85,19 @@ export function HomeDetailScreen() {
     }
   }, [favorite]);
 
+  function prettifyTextDetail(detail: string) {
+    let splitedDetail = detail.split('_');
+
+    for (let i = 0; i < splitedDetail.length; i++) {
+      splitedDetail[i] =
+        splitedDetail[i][0].toUpperCase() + splitedDetail[i].substr(1);
+    }
+
+    detail = splitedDetail.join(' ');
+    return detail;
+  }
+  function handleOnPressProposalButton() {}
+
   useEffect(() => {
     fetchHouseDetails();
 
@@ -131,14 +147,30 @@ export function HomeDetailScreen() {
                 ? houseDetail.location.address.state
                 : 'STATE NOT FOUND'
             }`}</DetailText>
-            <DetailSubTitle>
-              U${' '}
-              {Number(
-                houseDetail.list_price_max ? houseDetail.list_price_max : 0,
-              ).toFixed(2)}
-            </DetailSubTitle>
-
             <ScreenLine />
+            <ProposalCard>
+              <ProposalCardTextContainer>
+                <DetailText>Price</DetailText>
+                <DetailSubTitle>
+                  U${' '}
+                  {Number(
+                    houseDetail.list_price_max ? houseDetail.list_price_max : 0,
+                  )}
+                </DetailSubTitle>
+              </ProposalCardTextContainer>
+
+              <Button
+                mt={0}
+                width={170}
+                height={40}
+                mr={15}
+                text="Make proposal"
+                fs={16}
+                onPress={handleOnPressProposalButton}
+                style={styles.shadow}
+              />
+            </ProposalCard>
+
             <DetailSectionTitle mt={24} mb={12}>
               Details
             </DetailSectionTitle>
@@ -176,9 +208,9 @@ export function HomeDetailScreen() {
               {houseDetail?.tags &&
                 houseDetail.tags.map(item => (
                   <DetailText
-                    key={item}
+                    // key={item}
                     mr={25}
-                    mb={5}>{`-${item}`}</DetailText>
+                    mb={5}>{`-${prettifyTextDetail(item)}`}</DetailText>
                 ))}
             </HomeFeaturesContainer>
           </>
@@ -187,3 +219,17 @@ export function HomeDetailScreen() {
     </ScreenContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 5.49,
+
+    elevation: 4,
+  },
+});

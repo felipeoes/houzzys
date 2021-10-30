@@ -59,8 +59,24 @@ export const HomeFeaturesContainer = styled.View`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: baseline;
-  align-content: space-between;
+  align-items: flex-start;
   justify-content: space-between;
   width: 100%;
+`;
+
+export const ProposalCard = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f3f3f3;
+  width: 100%;
+  height: ${({ theme }) => theme.metrics.px(96)}px;
+  border-radius: 16px;
+  margin-top: ${({ theme }) => theme.metrics.px(30)}px;
+`;
+
+export const ProposalCardTextContainer = styled.View`
+  margin-left: ${({ theme }) => theme.metrics.px(26)}px;
+  flex: 1;
 `;

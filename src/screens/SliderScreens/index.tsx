@@ -10,11 +10,9 @@ import {
   SliderTitle,
   SkipText,
   SkipButton,
-  LoginText,
 } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const slides = [
   {
@@ -47,21 +45,12 @@ export function SliderScreens() {
     navigation.navigate('Home');
   }
 
-  function handleOnPressLoginText() {
-    navigation.navigate('Login');
-  }
-
   function _renderItem({ item }: any) {
     return (
       <SliderView>
         <SliderTitle>{item.title}</SliderTitle>
         <Image source={item.image} />
         <SliderText>{item.text}</SliderText>
-        {item.key === 3 && (
-          <TouchableOpacity onPress={handleOnPressLoginText}>
-            <LoginText>Already have an account?</LoginText>
-          </TouchableOpacity>
-        )}
       </SliderView>
     );
   }

@@ -4,7 +4,6 @@ export const ScreenScroll = styled.ScrollView``;
 
 export const ScreenContainer = styled.SafeAreaView`
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   background-color: white;
@@ -24,7 +23,7 @@ export const ContentContainer = styled.View`
 `;
 
 export const InputContainer = styled.View`
-  padding-left: ${({ theme }) => theme.metrics.px(15)}px;
+  padding-left: ${({ theme }) => theme.metrics.px(8)}px;
   margin-bottom: ${({ theme }) => theme.metrics.px(34)}px;
 `;
 

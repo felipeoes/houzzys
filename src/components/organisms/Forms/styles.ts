@@ -44,7 +44,7 @@ export const IconMinuscontainer = styled.TouchableOpacity`
   justify-content: center;
   width: ${({ theme }) => theme.metrics.px(40)}px;
   height: 100%;
-  background-color: #f4f4f4;
+  background-color: #e5e6eb;
 `;
 
 export const IconPluscontainer = styled.TouchableOpacity`
