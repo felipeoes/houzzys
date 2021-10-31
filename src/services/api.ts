@@ -42,30 +42,3 @@ export function initializeConnection() {
 
   return client;
 }
-
-function getHousesList() {
-  return db.data.home_search.results;
-}
-
-function getHousesDetail(property_id: string) {
-  return db.data.home_search.results.find(
-    obj => obj.property_id === property_id,
-  );
-}
-
-function getLocationsList() {
-  var locations: string[] = [];
-
-  db.data.home_search.results.forEach(obj => {
-    if (obj.location != null) {
-      let full_location =
-        obj.location.address.line +
-        ', ' +
-        obj.location.address.city +
-        ', ' +
-        obj.location.address.state;
-      locations.push(full_location);
-    }
-  });
-  return locations;
-}

@@ -101,9 +101,9 @@ export function HomeDetailScreen() {
   useEffect(() => {
     fetchHouseDetails();
 
-    setTimeout(() => {
-      fetchHouseDetails();
-    }, 1000);
+    // setTimeout(() => {
+    //   fetchHouseDetails();
+    // }, 1000);
 
     setTimeout(() => {
       setLoading(false);
@@ -135,7 +135,7 @@ export function HomeDetailScreen() {
             <DetailTitle>
               {houseDetail.location && houseDetail.location.neighborhoods
                 ? houseDetail.location.neighborhoods[0].name
-                : 'Park Avenue Historic District'}
+                : 'NAN'}
             </DetailTitle>
 
             <DetailText>{`${
@@ -206,9 +206,9 @@ export function HomeDetailScreen() {
             </DetailSectionTitle>
             <HomeFeaturesContainer>
               {houseDetail?.tags &&
-                houseDetail.tags.map(item => (
+                houseDetail.tags.map((item, index) => (
                   <DetailText
-                    // key={item}
+                    key={index}
                     mr={25}
                     mb={5}>{`-${prettifyTextDetail(item)}`}</DetailText>
                 ))}

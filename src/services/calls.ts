@@ -45,26 +45,34 @@ export type FilteringParamsProps = {
   garages?: string;
 };
 
-export async function getHousesCall(): Promise<PropertiesProps[]> {
+function handleOnReceiveProperties(msg: string): PropertiesProps[] {
   let properties: PropertiesProps[] = [];
+  client.write(msg);
 
-  try {
-    client.write('properties list\n');
+  let received = new MessageBuffer('\n');
 
-    client.on('data', (data: string | Buffer) => {
-      try {
-        let buffer = Buffer.from(data);
-        let dataStr = buffer.toString('utf-8');
-        const object = JSON.parse(dataStr);
-        properties.push(object);
-        console.log(object);
-      } catch (error) {
-        console.log(error);
+  client.on('data', (data: string | Buffer) => {
+    try {
+      let buffer = Buffer.from(data);
+      let dataStr = buffer.toString('utf-8');
+
+      received.push(dataStr);
+      while (!received.isFinished()) {
+        const message = received.handleData();
+        properties.push(JSON.parse(message));
       }
-    });
-  } catch (error) {
-    console.log(error);
-  }
+
+      console.log(properties.length);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  return properties;
+}
+
+export async function getHousesCall(): Promise<PropertiesProps[]> {
+  let properties = handleOnReceiveProperties('properties_list\n');
 
   return properties;
 }
@@ -73,50 +81,23 @@ export async function getForSaleHousesCall(
   offset: number,
   filteringParams: FilteringParamsProps,
 ): Promise<PropertiesProps[]> {
-  let properties: PropertiesProps[] = [];
+  console.log(filteringParams);
+  const mensagem: string =
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    '\n';
 
-  try {
-    console.log(filteringParams);
-    const mensagem: string =
-      filteringParams.type +
-      ';' +
-      filteringParams.price[0] +
-      ';' +
-      filteringParams.price[1] +
-      ';' +
-      filteringParams.beds +
-      ';' +
-      filteringParams.baths +
-      ';' +
-      filteringParams.garages +
-      '\n';
+  let properties = handleOnReceiveProperties(mensagem);
 
-    console.log(mensagem);
-
-    client.write(mensagem);
-
-    let received = new MessageBuffer('\n');
-    client.on('data', (data: string | Buffer) => {
-      console.log('cheguei');
-
-      try {
-        let buffer = Buffer.from(data);
-        let dataStr = buffer.toString('utf-8');
-
-        received.push(dataStr);
-        while (!received.isFinished()) {
-          const message = received.handleData();
-          properties.push(JSON.parse(message));
-        }
-
-        console.log(properties.length);
-      } catch (error) {
-        console.log(error);
-      }
-    });
-  } catch (error) {
-    console.log(error);
-  }
   return properties;
 }
 
@@ -125,10 +106,17 @@ var property;
 export function getHouseDetailsCall(property_id: string): PropertiesProps {
   client.write('property id=' + property_id + '\n');
 
+  let received = new MessageBuffer('\n');
   client.on('data', (data: string | Buffer) => {
     try {
-      const object = JSON.parse(data.toString());
-      property = object;
+      let buffer = Buffer.from(data);
+      let dataStr = buffer.toString('utf-8');
+
+      received.push(dataStr);
+      while (!received.isFinished()) {
+        const object = received.handleData();
+        property = JSON.parse(object);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -142,15 +130,22 @@ export function getLocationsListCall() {
 
   client.write('locations suggestion\n');
 
-  client.on('data', data => {
+  let received = new MessageBuffer('\n');
+  client.on('data', (data: string | Buffer) => {
     try {
-      const location = data.toString();
-      locationsList.push(location);
-      console.log(location);
-    } catch (e) {
-      console.log(e);
+      let buffer = Buffer.from(data);
+      let dataStr = buffer.toString('utf-8');
+
+      received.push(dataStr);
+      while (!received.isFinished()) {
+        const object = received.handleData();
+        locationsList.push(object);
+      }
+    } catch (error) {
+      console.log(error);
     }
   });
 
   return locationsList;
+
 }

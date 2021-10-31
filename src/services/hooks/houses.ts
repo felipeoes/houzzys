@@ -17,7 +17,7 @@ export const useHousesHooks = () => {
 
   async function onGetHouses(): Promise<void> {
     setLoadingHousesList(true);
-    const result = await getHousesCall(offset);
+    const result = await getHousesCall();
 
     if (offset > 0) {
       const properties = result ? [...housesList, ...result] : housesList;
@@ -27,7 +27,9 @@ export const useHousesHooks = () => {
     }
 
     console.log(housesList);
-    setLoadingHousesList(false);
+    setTimeout(() => {
+      setLoadingHousesList(false);
+    }, 3000);
     setOffset(offset + 15);
   }
 

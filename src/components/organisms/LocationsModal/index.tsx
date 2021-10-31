@@ -11,6 +11,7 @@ import {
 import { getLocationsListCall } from '../../../services/calls';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CardTitle } from '../../atoms';
+import { Loading } from '../../molecules';
 
 type LocationsModalProps = {
   data: string[];
@@ -25,8 +26,10 @@ export function LocationsModal({
   onClose,
   onChangeTextInput,
 }: LocationsModalProps) {
+  const [locations, setLocations] = useState<string[]>([]);
   const [filteredLocations, setFilteredLocations] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string>('');
+  const [loading, setLoading] = useState(true);
 
   const locationsList = filteredLocations.map((location, index) => {
     return (
@@ -45,19 +48,19 @@ export function LocationsModal({
     );
   });
 
-  let locations = [
-    'cas 123, rua 10',
-    'asjajs, loajs',
-    'cas 123, rua 10',
-    'asjajs, loajs',
-    'cas 123, rua 10',
-    'asjajs, loajs',
-    'asasasas,01029',
-  ];
+  function handleOnGetLocationsList() {
+    const locs = getLocationsListCall();
+    return locs;
+  }
 
   useEffect(() => {
-    // locations = getLocationsListCall();
-    setFilteredLocations(locations);
+    const locs = handleOnGetLocationsList();
+    setFilteredLocations(locs);
+    setTimeout(() => {
+      console.log(locations);
+      setLoading(false);
+    }, 2000);
+    setLocations(locs);
   }, []);
 
   const findLocation = query => {
@@ -91,7 +94,11 @@ export function LocationsModal({
           onEndEditing={value => setSelectedLocation(value.target.toString())}
         />
       </LocationsModalContainer>
-      <LocationsListContainer>{locationsList}</LocationsListContainer>
+
+      <LocationsListContainer>
+        {loading && <Loading />}
+        {!loading && locationsList}
+      </LocationsListContainer>
     </Modal>
   );
 }

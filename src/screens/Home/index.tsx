@@ -22,7 +22,11 @@ import { LocationsModal } from '../../components/organisms/LocationsModal';
 
 export function HomeScreen() {
   const { onGetHouses } = useHousesHooks();
-  const { housesList, loadingHousesList } = useHousesStore();
+  const {
+    housesList,
+    loadingHousesList,
+    setLoadingHousesList,
+  } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
   const [valueInput, setValueInput] = useState('');
@@ -43,12 +47,13 @@ export function HomeScreen() {
   let firstTime = true;
 
   useEffect(() => {
+    onGetHouses();
     setTimeout(() => {
       if (firstTime) {
         firstTime = false;
       }
     }, 2000);
-    onGetHouses();
+
     // locations = getLocationsListCall();
   }, []);
 
