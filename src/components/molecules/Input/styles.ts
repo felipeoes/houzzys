@@ -54,5 +54,3 @@ export const InputIconContainer = styled.View`
   margin-top: ${({ theme }) => theme.metrics.px(24)}px;
   margin-left: ${({ theme }) => theme.metrics.px(8)}px;
 `;
-
-export const ProfileDropdownContainer = styled.TouchableOpacity``;

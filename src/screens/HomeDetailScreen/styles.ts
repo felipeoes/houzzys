@@ -1,5 +1,14 @@
 import styled from 'styled-components/native';
 
+type BaseViewProps = {
+  mt?: number;
+  mb?: number;
+  ml?: number;
+  mr?: number;
+  width?: number;
+  height?: number;
+};
+
 export const ScreenContainer = styled.View`
   flex: 1;
   align-items: flex-start;
@@ -9,11 +18,11 @@ export const ScreenContainer = styled.View`
   background-color: white;
 `;
 
-export const ScreenLine = styled.View`
+export const ScreenLine = styled.View<BaseViewProps>`
   background-color: ${({ theme }) => theme.colors.blueTransparent};
   width: 100%;
   height: 1px;
-  margin-top: ${({ theme }) => theme.metrics.px(20)}px;
+  margin-top: ${({ theme, mt }) => theme.metrics.px(mt || 20)}px;
 `;
 
 export const ImageBackground = styled.ImageBackground`

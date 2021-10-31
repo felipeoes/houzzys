@@ -15,9 +15,9 @@ export const useHousesHooks = () => {
     setParams,
   } = useHousesStore();
 
-  async function onGetHouses(params?: FilteringParamsProps): Promise<void> {
+  async function onGetHouses(): Promise<void> {
     setLoadingHousesList(true);
-    const result = await getHousesCall(offset, { ...params });
+    const result = await getHousesCall(offset);
 
     if (offset > 0) {
       const properties = result ? [...housesList, ...result] : housesList;
@@ -47,7 +47,9 @@ export const useHousesHooks = () => {
       setHousesList(result);
     }
 
-    setLoadingHousesList(false);
+    setTimeout(() => {
+      setLoadingHousesList(false);
+    }, 3000);
   }
 
   return { onGetHouses, onFilterHouseList };

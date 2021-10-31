@@ -1,4 +1,7 @@
 export default class MessageBuffer {
+  delimiter: any;
+  buffer: string;
+
   constructor(delimiter) {
     this.delimiter = delimiter;
     this.buffer = '';
@@ -29,12 +32,6 @@ export default class MessageBuffer {
   }
 
   handleData() {
-    /**
-     * Try to accumulate the buffer with messages
-     *
-     * If the server isnt sending delimiters for some reason
-     * then nothing will ever come back for these requests
-     */
     const message = this.getMessage();
     return message;
   }

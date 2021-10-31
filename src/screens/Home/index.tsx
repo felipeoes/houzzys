@@ -5,7 +5,6 @@ import {
   TopContainer,
   TitleContainer,
   ContentContainer,
-  InputContainer,
   HeaderContainer,
 } from './styles';
 import {
@@ -21,23 +20,13 @@ import { useHousesStore } from '../../services/stores';
 import HousesList from '../../components/organisms/HousesList';
 import { LocationsModal } from '../../components/organisms/LocationsModal';
 
-function InputModal({ housesList, onPress }) {
-  return (
-    <InputContainer>
-      <Input
-        placeholder="Type the address"
-        housesList={housesList}
-        onPressIn={onPress}
-      />
-    </InputContainer>
-  );
-}
-
 export function HomeScreen() {
   const { onGetHouses } = useHousesHooks();
   const { housesList, loadingHousesList } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
+  const [valueInput, setValueInput] = useState('');
+  const [locationsList, setLocationsList] = useState<string[]>(['']);
 
   const toggleFilterModal = useCallback(() => {
     setFilterModalVisible(prevState => !prevState);
@@ -46,6 +35,10 @@ export function HomeScreen() {
   const toggleLocationsModal = useCallback(() => {
     setLocationsModalVisible(prevState => !prevState);
   }, []);
+
+  function handleOnChangeText(value: string) {
+    setValueInput(value);
+  }
 
   let firstTime = true;
 
@@ -56,6 +49,7 @@ export function HomeScreen() {
       }
     }, 2000);
     onGetHouses();
+    // locations = getLocationsListCall();
   }, []);
 
   return (
@@ -66,17 +60,14 @@ export function HomeScreen() {
         onEndReached={onGetHouses}>
         <ContentContainer>
           <HeaderContainer>
-            <InputModal
-              housesList={housesList}
-              onPress={toggleLocationsModal}
+            <Input
+              mb={34}
+              onPressIn={toggleLocationsModal}
+              placeholder="Type the address"
+              defaultValue={valueInput}
+              value={valueInput}
+              onChangeText={(value: string) => handleOnChangeText(value)}
             />
-            {/* <InputContainer>
-              <Input
-                placeholder="Type the address"
-                housesList={housesList}
-                onPressIn={toggleLocationsModal}
-              />
-            </InputContainer> */}
           </HeaderContainer>
 
           <TopContainer>
@@ -98,9 +89,10 @@ export function HomeScreen() {
       )}
       {locationsModalVisible && (
         <LocationsModal
+          data={locationsList}
           visible={locationsModalVisible}
           onClose={toggleLocationsModal}
-          inputModal={InputModal({ housesList })}
+          onChangeTextInput={(value: string) => handleOnChangeText(value)}
         />
       )}
     </ScreenContainer>

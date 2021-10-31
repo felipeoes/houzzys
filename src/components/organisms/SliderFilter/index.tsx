@@ -11,7 +11,15 @@ import {
 import { CardHightLightText } from '../../index';
 import { FilterSubText } from '../FilterModal/styles';
 
-export class SliderExample extends React.Component {
+type SliderExampleProps = {
+  min: number;
+  max: number;
+  step: number;
+  type: boolean;
+  onChangePrice: (values: number[]) => void;
+};
+
+export class SliderExample extends React.Component<SliderExampleProps> {
   min = this.props.min;
   max = this.props.max;
   step = this.props.step;

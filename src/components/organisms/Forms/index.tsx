@@ -19,10 +19,10 @@ import { StyleSheet } from 'react-native';
 
 type FormProps = {
   onClose: () => void;
-  type: string;
+  type: boolean;
 };
 
-export function Form({ onClose, type }) {
+export function Form({ onClose, type }: FormProps) {
   const { onFilterHouseList } = useHousesHooks();
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(0);
@@ -34,41 +34,27 @@ export function Form({ onClose, type }) {
   }
 
   const [form, setForm] = useState({
-<<<<<<< HEAD
     beds: '0',
     price: [],
     baths: '0',
     garages: '0',
-=======
-    beds: '',
-    price: [],
-    baths: '',
-    garages: '',
->>>>>>> c134ad70406fab515ded2d1832d97e7f16702238
   });
 
-  // function checkDisabledButton(card: any) {
-  //   if (card.value > 0) {
-  //     setDisabled(false);
-  //   }
-  //   return card.value <= 0;
-  // }
   const onPressApply = useCallback(() => {
     onFilterHouseList(form);
     onClose();
     console.log(form);
   }, [form]);
 
-  const handleForm = useCallback((value, field, type?) => {
-    console.log(value, field, type);
-    if (type && type === 'increment') {
+  const handleForm = useCallback((value, field, typeIcon?) => {
+    if (typeIcon && typeIcon === 'increment') {
       value = (Number(value) + 1).toString();
 
       setForm(prevState => ({
         ...prevState,
         [field]: value,
       }));
-    } else if (type && type === 'decrement' && value > 0) {
+    } else if (typeIcon && typeIcon === 'decrement' && value > 0) {
       value = (Number(value) - 1).toString();
       setForm(prevState => ({
         ...prevState,
