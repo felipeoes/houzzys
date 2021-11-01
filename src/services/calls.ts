@@ -101,6 +101,32 @@ export async function getForSaleHousesCall(
   return properties;
 }
 
+export async function getForRentHousesCall(
+  offset: number,
+  filteringParams: FilteringParamsProps,
+): Promise<PropertiesProps[]> {
+  console.log(filteringParams);
+  const mensagem: string =
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    '\n';
+
+  let properties = handleOnReceiveProperties(mensagem);
+
+  console.log(mensagem);
+
+  return properties;
+}
+
 var property;
 
 export function getHouseDetailsCall(property_id: string): PropertiesProps {
