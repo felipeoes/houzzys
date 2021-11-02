@@ -105,7 +105,14 @@ export async function getForRentHousesCall(
   offset: number,
   filteringParams: FilteringParamsProps,
 ): Promise<PropertiesProps[]> {
-  console.log(filteringParams);
+  
+  if(filteringParams.price.length == 0)
+  {
+    filteringParams.price[0] = 0;
+
+    filteringParams.price[1] = 20000;
+  }
+  //console.log(filteringParams);
   const mensagem: string =
     filteringParams.type +
     ';' +
