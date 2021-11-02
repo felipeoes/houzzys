@@ -40,7 +40,7 @@ export const useHousesHooks = () => {
     setParams(params);
     
     params.type = 'for_rent';
-    if ('for_sale') {
+    if (params.type === 'for_sale') {
       const result = await getForSaleHousesCall(offset, { ...params });
       console.log(
         'entrei no for sale',
