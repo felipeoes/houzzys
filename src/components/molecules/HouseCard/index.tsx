@@ -41,7 +41,17 @@ export function HouseCard({
         <TextContainerLeft>
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
-          <CardHightLightText>U$ {Number(price)}/mo</CardHightLightText>
+          {item.status === 'for_rent' ? (
+            <CardHightLightText>U$ {Number(price)}/mo</CardHightLightText>
+          ) : (
+            <CardHightLightText>
+              U${' '}
+              {Number(price).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })}
+            </CardHightLightText>
+          )}
         </TextContainerLeft>
       </TextContainer>
     </CardContainer>

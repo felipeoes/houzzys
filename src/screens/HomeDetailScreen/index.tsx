@@ -65,7 +65,7 @@ export function HomeDetailScreen() {
       stopFetchingHouseDetails();
     }
     setHouseDetail(result);
-    console.log(result);
+    //console.log(result);
   }
 
   const checkIfHouseIsFavorite = useCallback(async () => {
@@ -135,7 +135,9 @@ export function HomeDetailScreen() {
             <DetailTitle>
               {houseDetail.location && houseDetail.location.neighborhoods
                 ? houseDetail.location.neighborhoods[0].name
-                : 'NAN'}
+                : houseDetail.location.address.city +
+                  ', ' +
+                  houseDetail.location.address.state}
             </DetailTitle>
 
             <DetailText>{`${
@@ -154,7 +156,9 @@ export function HomeDetailScreen() {
                 <DetailSubTitle>
                   U${' '}
                   {Number(
-                    houseDetail.list_price_max ? houseDetail.list_price_max : 0,
+                    houseDetail.list_price_max
+                      ? houseDetail.list_price_max
+                      : houseDetail.list_price,
                   )}
                 </DetailSubTitle>
               </ProposalCardTextContainer>

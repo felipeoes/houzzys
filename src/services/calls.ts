@@ -3,6 +3,7 @@ import { Buffer } from 'buffer';
 
 import MessageBuffer from '../services/buffer/MessageBuffer';
 
+//PropertiesProps
 export type PropertiesProps = {
   property_id: string;
   location: {
@@ -62,7 +63,7 @@ function handleOnReceiveProperties(msg: string): PropertiesProps[] {
         properties.push(JSON.parse(message));
       }
 
-      console.log(properties.length);
+      //console.log(properties.length);
     } catch (error) {
       console.log(error);
     }
@@ -82,6 +83,12 @@ export async function getForSaleHousesCall(
   filteringParams: FilteringParamsProps,
 ): Promise<PropertiesProps[]> {
   console.log(filteringParams);
+  if (filteringParams.price.length === 0) {
+    filteringParams.price[0] = 0;
+
+    filteringParams.price[1] = 1000000;
+  }
+
   const mensagem: string =
     filteringParams.type +
     ';' +
@@ -105,9 +112,7 @@ export async function getForRentHousesCall(
   offset: number,
   filteringParams: FilteringParamsProps,
 ): Promise<PropertiesProps[]> {
-  
-  if(filteringParams.price.length == 0)
-  {
+  if (filteringParams.price.length === 0) {
     filteringParams.price[0] = 0;
 
     filteringParams.price[1] = 20000;
@@ -129,7 +134,7 @@ export async function getForRentHousesCall(
 
   let properties = handleOnReceiveProperties(mensagem);
 
-  console.log(mensagem);
+  //console.log(mensagem);
 
   return properties;
 }

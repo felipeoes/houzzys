@@ -41,10 +41,11 @@ export function Form({ onClose, type }: FormProps) {
   });
 
   const onPressApply = useCallback(() => {
+    console.log('type', type);
     onFilterHouseList(form, type);
     onClose();
     //console.log(form);
-  }, [form]);
+  }, [form, type]);
 
   const handleForm = useCallback((value, field, typeIcon?) => {
     if (typeIcon && typeIcon === 'increment') {

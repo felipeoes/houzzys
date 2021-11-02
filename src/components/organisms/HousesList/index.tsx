@@ -23,7 +23,7 @@ function HousesList({
         title={`${
           item.location.neighborhoods
             ? item.location.neighborhoods[0].name
-            : 'Park Avenue Historic District'
+            : item.location.address.city + ', ' + item.location.address.state
         }`}
         description={`${item.location.address.line} - ${item.location.address.state} `}
         imageSource={
@@ -31,7 +31,7 @@ function HousesList({
             ? item.photos[0].href
             : 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg'
         }
-        price={item.list_price_max}
+        price={item.list_price_max ? item.list_price_max : item.list_price}
       />
     );
   }

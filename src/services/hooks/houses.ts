@@ -40,7 +40,7 @@ export const useHousesHooks = () => {
     setLoadingHousesList(true);
     setParams(params);
 
-    console.log(params);
+    console.log(params, type);
 
     if (type === false) {
       params.type = 'for_sale';
