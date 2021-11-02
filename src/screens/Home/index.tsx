@@ -26,6 +26,7 @@ export function HomeScreen() {
     housesList,
     loadingHousesList,
     setLoadingHousesList,
+    setHousesList,
   } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
@@ -43,6 +44,27 @@ export function HomeScreen() {
   function handleOnChangeText(value: string) {
     setValueInput(value);
   }
+
+  useEffect(() => {
+    if (locationsModalVisible === false && valueInput !== '') {
+      console.log('entrei para o filtro');
+      console.log(valueInput);
+      const houses = housesList.filter(house => {
+        const fullAddress =
+          house.location.address.line +
+          ', ' +
+          house.location.address.city +
+          ', ' +
+          house.location.address.state;
+
+        console.log('aquii', fullAddress);
+
+        return fullAddress === valueInput;
+      });
+      setHousesList(houses);
+      console.log('filtro endereço', houses.length);
+    }
+  }, [locationsModalVisible]);
 
   let firstTime = true;
 

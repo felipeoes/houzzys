@@ -30,8 +30,6 @@ export function FilterModal({ visible, onClose }: FilterModalProps) {
     setFilling(!filling);
   }
 
-
-
   return (
     <Modal visible={visible} onClose={onClose} title="Filter" background>
       <ScreenLine />

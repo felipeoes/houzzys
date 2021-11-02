@@ -41,9 +41,9 @@ export function Form({ onClose, type }: FormProps) {
   });
 
   const onPressApply = useCallback(() => {
-    onFilterHouseList(form);
+    onFilterHouseList(form, type);
     onClose();
-    console.log(form);
+    //console.log(form);
   }, [form]);
 
   const handleForm = useCallback((value, field, typeIcon?) => {

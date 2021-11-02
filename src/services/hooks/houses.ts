@@ -35,25 +35,25 @@ export const useHousesHooks = () => {
 
   async function onFilterHouseList(
     params: FilteringParamsProps,
+    type: boolean,
   ): Promise<void> {
     setLoadingHousesList(true);
     setParams(params);
-    
-    params.type = 'for_rent';
-    if ('for_sale') {
+
+    console.log(params);
+
+    if (type === false) {
+      params.type = 'for_sale';
       const result = await getForSaleHousesCall(offset, { ...params });
       console.log(
         'entrei no for sale',
-        'quantidade de casas retornasdas ' + result.length,
+        'quantidade de casas retornadas: ' + result.length,
       );
       setHousesList(result);
-    }
-
-   else if (params.type === 'for_rent') {
+    } else if (type === true) {
+      params.type = 'for_rent';
       const result = await getForRentHousesCall(offset, { ...params });
-      console.log(
-        'for rent' + result.length,
-      );
+      console.log('for rent' + result.length);
       setHousesList(result);
     }
 

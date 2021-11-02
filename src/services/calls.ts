@@ -38,7 +38,7 @@ type ResponseProps = {
 };
 
 export type FilteringParamsProps = {
-  type?: string;
+  type?: string | boolean;
   beds?: string;
   price: Array<Number>;
   baths?: string;
@@ -173,5 +173,4 @@ export function getLocationsListCall() {
   });
 
   return locationsList;
-
 }
