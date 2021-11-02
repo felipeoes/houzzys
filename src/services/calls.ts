@@ -34,10 +34,6 @@ export type PropertiesProps = {
   }[];
 };
 
-type ResponseProps = {
-  properties: PropertiesProps[];
-};
-
 export type FilteringParamsProps = {
   type?: string | boolean;
   beds?: string;
@@ -60,7 +56,10 @@ function handleOnReceiveProperties(msg: string): PropertiesProps[] {
       received.push(dataStr);
       while (!received.isFinished()) {
         const message = received.handleData();
-        properties.push(JSON.parse(message));
+
+        if (message) {
+          properties.push(JSON.parse(message));
+        }
       }
 
       //console.log(properties.length);
@@ -153,7 +152,10 @@ export function getHouseDetailsCall(property_id: string): PropertiesProps {
       received.push(dataStr);
       while (!received.isFinished()) {
         const object = received.handleData();
-        property = JSON.parse(object);
+
+        if (object) {
+          property = JSON.parse(object);
+        }
       }
     } catch (error) {
       console.log(error);

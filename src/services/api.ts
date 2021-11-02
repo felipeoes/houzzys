@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import TcpSocket from 'react-native-tcp-socket';
-import db from '../../db_us_estate.json'; // This import style requires "esModuleInterop", see "side notes"
-import { serialize } from 'react-serialize';
 
 type ConnectionOptions = {
   port: number;
@@ -9,7 +6,7 @@ type ConnectionOptions = {
   reuseAddress?: boolean | undefined;
 };
 
-const host: string = '192.168.15.30';
+const host: string = '192.168.0.39';
 
 const options: ConnectionOptions = {
   port: 29298,
@@ -21,7 +18,7 @@ export const client = new TcpSocket.Socket();
 
 export function initializeConnection() {
   client.connect(options, () => {
-    client.write('Client connected\n');
+    client.write('Client connected \n');
   });
 
   client.on('connect', () => {

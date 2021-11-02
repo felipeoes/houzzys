@@ -7,14 +7,16 @@ type ButtonContainerProps = {
   mr?: number;
   width?: number;
   height?: number;
+  containerColor?: string;
 };
 
 export const ButtonContainer = styled.TouchableOpacity<ButtonContainerProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.terciary};
-  border-width: ${({ theme }) => theme.metrics.px(2)}px;
+  background-color: ${({ theme, containerColor }) =>
+    containerColor ? containerColor : theme.colors.terciary};
+  border-width: ${({ theme }) => theme.metrics.px(1)}px;
   border-color: ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.metrics.px(12)}px;
   width: ${({ theme, width }) => theme.metrics.px(width || 250)}px;

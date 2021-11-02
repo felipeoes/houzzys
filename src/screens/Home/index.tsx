@@ -22,16 +22,10 @@ import { LocationsModal } from '../../components/organisms/LocationsModal';
 
 export function HomeScreen() {
   const { onGetHouses } = useHousesHooks();
-  const {
-    housesList,
-    loadingHousesList,
-    setLoadingHousesList,
-    setHousesList,
-  } = useHousesStore();
+  const { housesList, loadingHousesList, setHousesList } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
   const [valueInput, setValueInput] = useState('');
-  const [locationsList, setLocationsList] = useState<string[]>(['']);
 
   const toggleFilterModal = useCallback(() => {
     setFilterModalVisible(prevState => !prevState);
@@ -45,26 +39,26 @@ export function HomeScreen() {
     setValueInput(value);
   }
 
-  useEffect(() => {
-    if (locationsModalVisible === false && valueInput !== '') {
-      console.log('entrei para o filtro');
-      console.log(valueInput);
-      const houses = housesList.filter(house => {
-        const fullAddress =
-          house.location.address.line +
-          ', ' +
-          house.location.address.city +
-          ', ' +
-          house.location.address.state;
+  // useEffect(() => {
+  //   if (locationsModalVisible === false && valueInput !== '') {
+  //     console.log('entrei para o filtro');
+  //     console.log(valueInput);
+  //     const houses = housesList.filter(house => {
+  //       const fullAddress =
+  //         house.location.address.line +
+  //         ', ' +
+  //         house.location.address.city +
+  //         ', ' +
+  //         house.location.address.state;
 
-        console.log('aquii', fullAddress);
+  //       console.log('aquii', fullAddress);
 
-        return fullAddress === valueInput;
-      });
-      setHousesList(houses);
-      console.log('filtro endereço', houses.length);
-    }
-  }, [locationsModalVisible]);
+  //       return fullAddress === valueInput;
+  //     });
+  //     setHousesList(houses);
+  //     console.log('filtro endereço', houses.length);
+  //   }
+  // }, [locationsModalVisible]);
 
   let firstTime = true;
 
@@ -116,7 +110,6 @@ export function HomeScreen() {
       )}
       {locationsModalVisible && (
         <LocationsModal
-          data={locationsList}
           visible={locationsModalVisible}
           onClose={toggleLocationsModal}
           onChangeTextInput={(value: string) => handleOnChangeText(value)}

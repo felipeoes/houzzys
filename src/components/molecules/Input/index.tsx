@@ -20,7 +20,7 @@ type InputProps = {
   data?: string[];
   placeholder: string;
   locationsList?: string[];
-  onPressIn?: void;
+  onPressIn?: () => void;
   setMyLocations?: (value: string[]) => void;
   value?: string;
   onChangeText: (value: string) => void;

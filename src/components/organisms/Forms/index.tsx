@@ -10,7 +10,7 @@ import {
   IconPluscontainer,
 } from './styles';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Button, DetailText } from '../..';
+import { Button, DetailText, IconButton } from '../..';
 import { colors } from '../../../styles/colors';
 import { useHousesHooks } from '../../../services/hooks/houses';
 import { SliderExample } from '../SliderFilter';
@@ -160,7 +160,22 @@ export function Form({ onClose, type }: FormProps) {
       <FilterSubtitle>Features</FilterSubtitle>
       {cardsList}
       <FormButtonContainer>
-        <Button mt={24} text="Aplicar" onPress={onPressApply} />
+        <Button
+          width={150}
+          height={40}
+          fs={16}
+          text="Clean filter"
+          containerColor="white"
+          textColor={colors.terciary}
+          onPress={onPressApply}
+        />
+        <Button
+          width={150}
+          height={40}
+          fs={16}
+          text="Apply filter"
+          onPress={onPressApply}
+        />
       </FormButtonContainer>
     </>
   );

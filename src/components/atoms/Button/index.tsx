@@ -11,13 +11,23 @@ type ButtonProps = {
   width?: number;
   height?: number;
   fs?: number;
+  containerColor?: string;
+  textColor?: string;
   onPress: () => void;
 };
 
-export function Button({ text, onPress, fs, ...props }: ButtonProps) {
+export function Button({
+  text,
+  onPress,
+  fs,
+  textColor,
+  ...props
+}: ButtonProps) {
   return (
     <ButtonContainer onPress={onPress} {...props}>
-      <ButtonText fs={fs}>{text}</ButtonText>
+      <ButtonText fs={fs} textColor={textColor} {...props}>
+        {text}
+      </ButtonText>
     </ButtonContainer>
   );
 }

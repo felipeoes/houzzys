@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Input, Modal } from '../../index';
 import { ScreenLine } from '../../../screens/HomeDetailScreen/styles';
@@ -14,7 +15,6 @@ import { CardTitle } from '../../atoms';
 import { Loading } from '../../molecules';
 
 type LocationsModalProps = {
-  data: string[];
   visible: boolean;
   onClose: () => void;
   children?: JSX.Element;

@@ -29,11 +29,7 @@ function HomeTabs() {
         },
         headerShown: false,
       }}
-      backBehavior="history"
-      shifting={true}
-      sceneAnimationEnabled={true}
-      activeColor="#000000"
-      inactiveColor="#A5A5A5">
+      backBehavior="history">
       <Tab.Screen
         name="Explore"
         component={HomeScreen}
