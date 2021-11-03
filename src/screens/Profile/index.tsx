@@ -26,10 +26,9 @@ const profileItems: ProfileItemProps[] = [
 ];
 const navigation = useNavigation();
 
-function logout (){
+function logout() {
   AsyncStorage.clear();
   navigation.navigate('Login');
-
 }
 export function Profile() {
   return (
@@ -37,7 +36,7 @@ export function Profile() {
       <ProfileHeader>
         <CardHightLightText>Hello, Felipe</CardHightLightText>
         <LogOutView>
-          <Icon name="sign-out" size={20} onPress={logout}/>
+          <Icon name="sign-out" size={20} onPress={logout} />
         </LogOutView>
       </ProfileHeader>
       <ProfileImage

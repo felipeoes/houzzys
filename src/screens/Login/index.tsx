@@ -12,10 +12,7 @@ import {
   RegisterHighlightTextContainer,
 } from './styles';
 
-import {
-  getUserAuth,
-  FilteringParamsProps
-} from '../../services/calls';
+import { getUserAuth, FilteringParamsProps } from '../../services/calls';
 import { getData } from '../../services/stores/db';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -37,40 +34,39 @@ export function Login({ visible }: LoginModalProps) {
   // call the function that you use to mount the component.
 
   useEffect(() => {
-    let idUser:number=0;
+    let idUser: number = 0;
     setTimeout(() => {
-      AsyncStorage.getItem("idUser").then((value) => {
-        idUser=Number(value);
+      AsyncStorage.getItem('idUser').then(value => {
+        idUser = Number(value);
       });
     }, 1);
-    if(idUser > 0 ){
+    if (idUser > 0) {
       navigation.navigate('Home');
     }
   }, [isFocused]);
 
   async function handleOnPressLogin() {
-    let idUser:number=0;
+    let idUser: number = 0;
     setTimeout(() => {
-      AsyncStorage.getItem("idUser").then((value) => {
-        idUser=Number(value);
+      AsyncStorage.getItem('idUser').then(value => {
+        idUser = Number(value);
       });
     }, 1);
 
-    if(idUser>0){
+    if (idUser > 0) {
       navigation.navigate('Home');
-    }
-    else if(username!='' && password !=''){
-      const user:FilteringParamsProps={
-        type:"login",
-        email:username,
-        password:password,
-        price:[0,0]
-      }
+    } else if (username != '' && password != '') {
+      const user: FilteringParamsProps = {
+        type: 'login',
+        email: username,
+        password: password,
+        price: [0, 0],
+      };
       await getUserAuth(user);
       setTimeout(() => {
-        AsyncStorage.getItem("idUser").then((value) => {
-          console.log("idusuario: " + value);
-          if(Number(value)>0){
+        AsyncStorage.getItem('idUser').then(value => {
+          console.log('idusuario: ' + value);
+          if (Number(value) > 0) {
             navigation.navigate('Home');
           }
         });

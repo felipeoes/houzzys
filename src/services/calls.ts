@@ -2,8 +2,7 @@ import { client } from './api';
 import { Buffer } from 'buffer';
 
 import MessageBuffer from '../services/buffer/MessageBuffer';
-import {saveData} from '../services/stores/db';
-
+import { saveData } from '../services/stores/db';
 
 /*
   Estrutura TypeScript utilizada para tipar os objetos das propriedades na aplicação.
@@ -40,15 +39,17 @@ export type PropertiesProps = {
   }[];
 };
 
-type UserProps={
-  idUser?:number;
-  email?:string;
-  password?:string;
-  proposals?:[{
-    price?:number;
-    propertyId?:string;
-  }]
-}
+type UserProps = {
+  idUser?: number;
+  email?: string;
+  password?: string;
+  proposals?: [
+    {
+      price?: number;
+      propertyId?: string;
+    },
+  ];
+};
 
 export type FilteringParamsProps = {
   type?: string | boolean; // tipo de propriedade filtrada pelo usuário: para venda = for_sale(false) e para aluguel = for_rent(true)
@@ -56,11 +57,10 @@ export type FilteringParamsProps = {
   beds?: string; // quantidade mínima de quartos desejado na propriedade
   baths?: string; // quantidade mínima de quartos desejado na propriedade
   garages?: string; // quantidade mínima de garagens desejado na propriedade
-  email?:string; //email enviado para authenticação
-  password?:string; //senha enviada no momento da authenticação
-  idUser?:string; // id usuario enviado para filtrar suas propostas
-  propertyId?:string; //id da propriedade usado na hora de criar uma proposta
-
+  email?: string; //email enviado para authenticação
+  password?: string; //senha enviada no momento da authenticação
+  idUser?: string; // id usuario enviado para filtrar suas propostas
+  propertyId?: string; //id da propriedade usado na hora de criar uma proposta
 };
 
 function handleOnSendProposal(msg: string) {
@@ -68,22 +68,21 @@ function handleOnSendProposal(msg: string) {
 }
 
 function handleOnReceiveUser(msg: string): number {
-  let user: number=0;
+  let user: number = 0;
   client.write(msg);
 
   let received = new MessageBuffer('\n');
 
   client.on('data', (data: string | Buffer) => {
     try {
-      console.log("handleOnReceiveUser"+String(data));
+      console.log('handleOnReceiveUser' + String(data));
 
-      if(Number(data) > 0){
-        saveData("idUser",String(data));
+      if (Number(data) > 0) {
+        saveData('idUser', String(data));
       }
     } catch (error) {
       console.log(error);
     }
-
   });
   return user;
 }
@@ -95,10 +94,9 @@ function handleOnReceiveRegister(msg: string) {
 
   client.on('data', (data: string | Buffer) => {
     try {
-
-      console.log("handleOnReceiveRegister " + String(data));
-      if(Number(data) > 0){
-        saveData("idUser",String(data));
+      console.log('handleOnReceiveRegister ' + String(data));
+      if (Number(data) > 0) {
+        saveData('idUser', String(data));
       }
     } catch (error) {
       console.log(error);
@@ -310,80 +308,74 @@ export function getLocationsListCall() {
   return locationsList;
 }
 
-export async function getUserAuth(
-  filteringParams: FilteringParamsProps,
-){
+export async function getUserAuth(filteringParams: FilteringParamsProps) {
   console.log(filteringParams);
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    '\n';
 
   handleOnReceiveUser(mensagem);
 }
 
-export async function registerUser(
-  filteringParams: FilteringParamsProps,
-) {
+export async function registerUser(filteringParams: FilteringParamsProps) {
   console.log(filteringParams);
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    '\n';
   handleOnReceiveRegister(mensagem);
 }
 
-export async function postProposal(
-  filteringParams: FilteringParamsProps,
-) {
+export async function postProposal(filteringParams: FilteringParamsProps) {
   console.log(filteringParams);
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  ';' +
-  filteringParams.idUser +
-  ';' +
-  filteringParams.propertyId +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    ';' +
+    filteringParams.idUser +
+    ';' +
+    filteringParams.propertyId +
+    '\n';
 
   handleOnSendProposal(mensagem);
 }

@@ -20,9 +20,7 @@ import { useHousesStore } from '../../services/stores';
 import HousesList from '../../components/organisms/HousesList';
 import { LocationsModal } from '../../components/organisms/LocationsModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  FilteringParamsProps
-} from '../../services/calls';
+import { FilteringParamsProps } from '../../services/calls';
 
 export function Proposals() {
   const { onFilterHouseList } = useHousesHooks();
@@ -51,27 +49,26 @@ export function Proposals() {
   }
 
   let firstTime = true;
- 
+
   useEffect(() => {
     AsyncStorage.getItem('idUser', (err, value) => {
       if (err) {
-          console.log(err);
+        console.log(err);
       } else {
         console.log(value);
-        if(Number(value)>0){
-          let form={
+        if (Number(value) > 0) {
+          let form = {
             beds: '0',
             price: [],
             baths: '0',
             garages: '0',
-            idUser: value
-          }
+            idUser: value,
+          };
           console.log(onFilterHouseList(form, true));
-          
         }
       }
     });
-    
+
     setTimeout(() => {
       if (firstTime) {
         firstTime = false;

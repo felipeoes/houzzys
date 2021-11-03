@@ -2,7 +2,7 @@ import {
   FilteringParamsProps,
   getHousesCall,
   getForSaleHousesCall,
-  getForRentHousesCall
+  getForRentHousesCall,
 } from '../calls';
 import { useHousesStore } from '../stores';
 
@@ -41,9 +41,8 @@ export const useHousesHooks = () => {
     setLoadingHousesList(true);
     setParams(params);
 
-    console.log("TO NO FILTER HOUSE LIST");
+    console.log('TO NO FILTER HOUSE LIST');
     console.log(params, type);
-
 
     if (type === false) {
       params.type = 'for_sale';
