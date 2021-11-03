@@ -22,10 +22,13 @@ import { LocationsModal } from '../../components/organisms/LocationsModal';
 
 export function HomeScreen() {
   const { onGetHouses } = useHousesHooks();
-  const { housesList, loadingHousesList, setHousesList } = useHousesStore();
+  // const { housesList } = route.params;
+  // console.log(housesList);
+  const { housesList, loadingHousesList } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
   const [valueInput, setValueInput] = useState('');
+  const [filteredHouses, setFilteredHouses] = useState(housesList);
 
   const toggleFilterModal = useCallback(() => {
     setFilterModalVisible(prevState => !prevState);
@@ -39,46 +42,34 @@ export function HomeScreen() {
     setValueInput(value);
   }
 
-  // useEffect(() => {
-  //   if (locationsModalVisible === false && valueInput !== '') {
-  //     console.log('entrei para o filtro');
-  //     console.log(valueInput);
-  //     const houses = housesList.filter(house => {
-  //       const fullAddress =
-  //         house.location.address.line +
-  //         ', ' +
-  //         house.location.address.city +
-  //         ', ' +
-  //         house.location.address.state;
-
-  //       console.log('aquii', fullAddress);
-
-  //       return fullAddress === valueInput;
-  //     });
-  //     setHousesList(houses);
-  //     console.log('filtro endereço', houses.length);
-  //   }
-  // }, [locationsModalVisible]);
-
-  let firstTime = true;
-
   useEffect(() => {
-    onGetHouses();
-    setTimeout(() => {
-      if (firstTime) {
-        firstTime = false;
-      }
-    }, 2000);
+    if (locationsModalVisible === false && valueInput !== '') {
+      console.log('entrei para o filtro');
+      console.log(valueInput);
+      const houses = housesList.filter(house => {
+        const fullAddress =
+          house.location.address.city + ', ' + house.location.address.state;
 
-    // locations = getLocationsListCall();
-  }, []);
+        console.log('aquii', fullAddress);
+
+        return fullAddress === valueInput;
+      });
+
+      if (houses.length > 0) {
+        setFilteredHouses(houses);
+      }
+
+      console.log('filtro endereço', houses.length);
+      console.log('total casas', housesList.length);
+    }
+  }, [locationsModalVisible]);
 
   return (
     <ScreenContainer>
       <HousesList
-        data={housesList}
+        data={filteredHouses}
         loading={loadingHousesList}
-        onEndReached={onGetHouses}>
+        onEndReached={false && onGetHouses}>
         <ContentContainer>
           <HeaderContainer>
             <Input

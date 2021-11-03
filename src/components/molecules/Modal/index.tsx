@@ -17,6 +17,8 @@ type ModalProps = {
   bRight?: number;
   bLeft?: number;
   background?: boolean;
+  widthModal?: number;
+  heightModal?: number;
 };
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -29,9 +31,16 @@ export function Modal({
   bRight,
   bLeft,
   background,
+  widthModal,
+  heightModal,
 }: ModalProps) {
   return (
-    <ModalContainer transparent visible={visible} onRequestClose={onClose}>
+    <ModalContainer
+      widthModal={widthModal}
+      heightModal={heightModal}
+      transparent
+      visible={visible}
+      onRequestClose={onClose}>
       {background && (
         <ModalBackground>
           <BottomScreenContainer width={width} bRight={bRight} bLeft={bLeft}>

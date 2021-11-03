@@ -19,17 +19,22 @@ type LocationsModalProps = {
   onClose: () => void;
   children?: JSX.Element;
   onChangeTextInput: (value: string) => void;
+  width?: number;
+  height?: number;
 };
 
 export function LocationsModal({
   visible,
   onClose,
   onChangeTextInput,
+  width,
+  height,
 }: LocationsModalProps) {
   const [locations, setLocations] = useState<string[]>([]);
   const [filteredLocations, setFilteredLocations] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [heightModal, setHeightModal] = useState(100);
 
   const locationsList = filteredLocations.map((location, index) => {
     return (
@@ -48,19 +53,26 @@ export function LocationsModal({
     );
   });
 
+  function onCloseModal() {
+    setHeightModal(0);
+  }
+
   function handleOnGetLocationsList() {
     const locs = getLocationsListCall();
     return locs;
   }
 
   useEffect(() => {
-    const locs = handleOnGetLocationsList();
-    setFilteredLocations(locs);
+    if (filteredLocations.length === 0) {
+      const locs = handleOnGetLocationsList();
+      setFilteredLocations(locs);
+      setLocations(locs);
+      console.log('ENTREI NO FILTERED');
+    }
+
     setTimeout(() => {
-      console.log(locations);
       setLoading(false);
     }, 2000);
-    setLocations(locs);
   }, []);
 
   const findLocation = query => {
@@ -77,7 +89,12 @@ export function LocationsModal({
   };
 
   return (
-    <Modal visible={visible} onClose={onClose} title="Search" background>
+    <Modal
+      visible={visible}
+      onClose={onClose}
+      title="Search"
+      background
+      heightModal={heightModal}>
       <ScreenLine />
       <CardTitle ml={40} mt={24}>
         Type the address and make sure {'\n'}you select a location to search for

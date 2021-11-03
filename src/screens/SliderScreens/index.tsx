@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -13,6 +13,8 @@ import {
 } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
+import { useHousesHooks } from '../../services/hooks';
+import { useHousesStore } from '../../services/stores';
 
 const slides = [
   {
@@ -41,9 +43,15 @@ const slides = [
 export function SliderScreens() {
   const navigation = useNavigation();
 
+  const { onGetHouses } = useHousesHooks();
+
   function handleOnPressDoneButton() {
     navigation.navigate('Home');
   }
+
+  useEffect(() => {
+    onGetHouses();
+  }, []);
 
   function _renderItem({ item }: any) {
     return (

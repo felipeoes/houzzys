@@ -1,15 +1,23 @@
 import styled from 'styled-components/native';
 
-export const ModalContainer = styled.Modal`
+type ModalContainerProps = {
+  widthModal?: number;
+  heightModal?: number;
+};
+
+export const ModalContainer = styled.Modal<ModalContainerProps>`
   flex: 1;
-  width: ${({ theme }) => theme.metrics.wp(100)}px;
-  height: ${({ theme }) => theme.metrics.hp(100)}px;
+  width: ${({ theme, widthModal }) =>
+    widthModal ? widthModal : theme.metrics.wp(100)}px;
+  height: ${({ theme, heightModal }) =>
+    heightModal ? heightModal : theme.metrics.hp(100)}px;
   position: absolute;
   background: transparent;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  display: flex;
 `;
 
 export const ModalBackground = styled.View`
