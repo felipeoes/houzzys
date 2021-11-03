@@ -25,7 +25,7 @@ import {
 } from '../../services/calls';
 import { useNavigation } from '@react-navigation/native';
 
-export function Proposals() {
+export function Favorites() {
   const { onFilterHouseList } = useHousesHooks();
   const { onGetHouses } = useHousesHooks();
 
@@ -69,27 +69,26 @@ export function Proposals() {
 
     if(firstTime){
 
-  useEffect(() => {
-    if (firstTime) {
       AsyncStorage.getItem('idUser', (err, value) => {
         if (err) {
-          console.log(err);
+            console.log(err);
         } else {
           console.log(value);
-          if (Number(value) > 0) {
-            let form = {
+          if(Number(value)>0){
+            let form={
               beds: '0',
               price: [],
               baths: '0',
               garages: '0',
               idUser: value,
-            };
+              isProposal:false
+            }
             onFilterHouseList(form, true);
           }
         }
       });
     }
-
+    
     setTimeout(() => {
       if (firstTime) {
         firstTime = false;
@@ -104,7 +103,7 @@ export function Proposals() {
       <HousesList
         data={filteredHousesList}
         loading={loadingHousesList}
-        onEndReached={() => {}}>
+        onEndReached={()=>{}}>
         <ContentContainer>
           <HeaderContainer>
             <Input
@@ -119,7 +118,7 @@ export function Proposals() {
 
           <TopContainer>
             <TitleContainer>
-              <Title>See your proposals here</Title>
+              <Title>See your favorites here</Title>
             </TitleContainer>
             <IconButton
               iconText="Filter"

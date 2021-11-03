@@ -20,6 +20,9 @@ type State = {
 
   params: FilteringParamsProps;
   setParams: (params: FilteringParamsProps) => void;
+
+  fromProposals: boolean;
+  setFromProposals: (fromProposals: boolean) => void;
 };
 
 export const useHousesStore = create<State>(set => ({
@@ -40,4 +43,7 @@ export const useHousesStore = create<State>(set => ({
 
   params: {} as FilteringParamsProps,
   setParams: params => set({ params }),
+
+  fromProposals: true,
+  setFromProposals: fromProposals => set({ fromProposals }),
 }));

@@ -28,17 +28,26 @@ export function Register({ visible }: RegisterModalProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [textoErro, setTextoErro] = useState('');
+
 
   const navigation = useNavigation();
-
   async function handleOnPressRegister() {
     console.log("senha: "+password);
     console.log("user: "+username);
-    if(password == passwordConfirm){
-      if(username == ''){
-        //sinalizar erro username vazio
-        return;
-      }
+    if(password !== passwordConfirm){
+      setTextoErro("As senhas estão diferentes");
+      return;
+    }
+    if(username === ''){
+      setTextoErro("Preencha o email");
+      return;
+    }
+    if(password === ''){
+      setTextoErro("Preencha a senha");
+      return;
+    }
+    if(textoErro === ""){
       const user:FilteringParamsProps={
         type:"register",
         email:username,
@@ -47,11 +56,8 @@ export function Register({ visible }: RegisterModalProps) {
       }
       await registerUser(user);
       navigation.navigate('Home');
-      
-    }else{
-      //sinalizar erro senhas diferentes
     }
-   
+  
   }
 
   function handleOnPressLoginText() {
@@ -113,7 +119,10 @@ export function Register({ visible }: RegisterModalProps) {
             onPress={handleOnPressRegister}
           />
         </LoginContainer>
-
+        {textoErro!='' ?(<DetailText>{textoErro}</DetailText>)
+        :null
+        }
+        
         <DetailText mt={15}>
           Already have an account?
           <RegisterHighlightTextContainer onPress={handleOnPressLoginText}>
