@@ -10,6 +10,7 @@ export const useHousesHooks = () => {
     housesList,
     setHousesList,
     setLoadingHousesList,
+    setFilteredHousesList,
     offset,
     setOffset,
     setParams,
@@ -46,12 +47,15 @@ export const useHousesHooks = () => {
       params.type = 'for_sale';
 
       const result = await getForSaleHousesCall(offset, { ...params });
-      setHousesList(result);
+
+      setFilteredHousesList(result);
+      // setHousesList(result);
     } else if (type === true) {
       params.type = 'for_rent';
 
       const result = await getForRentHousesCall(offset, { ...params });
-      setHousesList(result);
+      setFilteredHousesList(result);
+      // setHousesList(result);
     }
 
     setTimeout(() => {

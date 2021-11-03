@@ -7,7 +7,7 @@ type HousesListProps = {
   loading: boolean;
   data: PropertiesProps[];
   children?: React.ReactElement;
-  onEndReached: () => Promise<void>;
+  onEndReached?: () => Promise<void>;
 };
 
 function HousesList({

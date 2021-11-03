@@ -17,7 +17,6 @@ export function FilterModal({ visible, onClose }: FilterModalProps) {
   const [bordering, setBordering] = useState(true);
   const [filling, setFilling] = useState(true);
   const [type, setType] = useState(true); // true for rent, false for buy
-  let openedModal: string;
 
   function handleOnPressButton(typeValue: boolean) {
     typeValue !== type ? handleOnChangeEffets() : '';

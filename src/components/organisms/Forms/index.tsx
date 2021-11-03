@@ -10,12 +10,13 @@ import {
   IconPluscontainer,
 } from './styles';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Button, DetailText, IconButton } from '../..';
+import { Button, DetailText } from '../..';
 import { colors } from '../../../styles/colors';
 import { useHousesHooks } from '../../../services/hooks/houses';
 import { SliderExample } from '../SliderFilter';
 import { FilterSubtitle } from '../FilterModal/styles';
 import { StyleSheet } from 'react-native';
+import { useHousesStore } from '../../../services/stores';
 
 type FormProps = {
   onClose: () => void;
@@ -23,6 +24,7 @@ type FormProps = {
 };
 
 export function Form({ onClose, type }: FormProps) {
+  const { housesList, setFilteredHousesList } = useHousesStore();
   const { onFilterHouseList } = useHousesHooks();
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(0);
@@ -44,8 +46,12 @@ export function Form({ onClose, type }: FormProps) {
     console.log('type', type);
     onFilterHouseList(form, type);
     onClose();
-    //console.log(form);
   }, [form, type]);
+
+  function onPressCleanFilter() {
+    setFilteredHousesList(housesList);
+    onClose();
+  }
 
   const handleForm = useCallback((value, field, typeIcon?) => {
     if (typeIcon && typeIcon === 'increment') {
@@ -167,7 +173,7 @@ export function Form({ onClose, type }: FormProps) {
           text="Clean filter"
           containerColor="white"
           textColor={colors.terciary}
-          onPress={onPressApply}
+          onPress={onPressCleanFilter}
         />
         <Button
           width={150}

@@ -12,6 +12,9 @@ type State = {
   housesList: PropertiesProps[];
   setHousesList: (houses: PropertiesProps[]) => void;
 
+  filteredHousesList: PropertiesProps[];
+  setFilteredHousesList: (filteredHouses: PropertiesProps[]) => void;
+
   selectedHouse: PropertiesProps;
   setSelectedHouse: (selectedHouse: PropertiesProps) => void;
 
@@ -28,6 +31,9 @@ export const useHousesStore = create<State>(set => ({
 
   housesList: [],
   setHousesList: housesList => set({ housesList }),
+
+  filteredHousesList: [],
+  setFilteredHousesList: filteredHousesList => set({ filteredHousesList }),
 
   selectedHouse: {} as PropertiesProps,
   setSelectedHouse: selectedHouse => set({ selectedHouse }),

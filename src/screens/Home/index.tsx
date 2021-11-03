@@ -14,21 +14,22 @@ import {
   Loading,
   FilterModal,
 } from '../../components/index';
-import { useHousesHooks } from '../../services/hooks';
 import { useHousesStore } from '../../services/stores';
 
 import HousesList from '../../components/organisms/HousesList';
 import { LocationsModal } from '../../components/organisms/LocationsModal';
 
 export function HomeScreen() {
-  const { onGetHouses } = useHousesHooks();
-  // const { housesList } = route.params;
-  // console.log(housesList);
-  const { housesList, loadingHousesList } = useHousesStore();
+  const {
+    housesList,
+    loadingHousesList,
+    filteredHousesList,
+    setFilteredHousesList,
+  } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
   const [valueInput, setValueInput] = useState('');
-  const [filteredHouses, setFilteredHouses] = useState(housesList);
+  // const [filteredHouses, setFilteredHouses] = useState(housesList);
 
   const toggleFilterModal = useCallback(() => {
     setFilterModalVisible(prevState => !prevState);
@@ -40,6 +41,17 @@ export function HomeScreen() {
 
   function handleOnChangeText(value: string) {
     setValueInput(value);
+  }
+
+  // function handleOnFilterHouses(houses: PropertiesProps[]) {
+  //   setFilteredHouses(houses);
+  // }
+
+  function handleOnChooseData() {
+    if (filteredHousesList.length > 0) {
+      return filteredHousesList;
+    }
+    return housesList;
   }
 
   useEffect(() => {
@@ -56,7 +68,7 @@ export function HomeScreen() {
       });
 
       if (houses.length > 0) {
-        setFilteredHouses(houses);
+        setFilteredHousesList(houses);
       }
 
       console.log('filtro endereço', houses.length);
@@ -66,10 +78,7 @@ export function HomeScreen() {
 
   return (
     <ScreenContainer>
-      <HousesList
-        data={filteredHouses}
-        loading={loadingHousesList}
-        onEndReached={false && onGetHouses}>
+      <HousesList data={handleOnChooseData()} loading={loadingHousesList}>
         <ContentContainer>
           <HeaderContainer>
             <Input

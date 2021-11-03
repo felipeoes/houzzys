@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,7 +15,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
 import { useHousesHooks } from '../../services/hooks';
-import { useHousesStore } from '../../services/stores';
 
 const slides = [
   {
