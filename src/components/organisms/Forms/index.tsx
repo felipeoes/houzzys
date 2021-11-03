@@ -25,6 +25,8 @@ type FormProps = {
 
 export function Form({ onClose, type }: FormProps) {
   const { housesList, setFilteredHousesList } = useHousesStore();
+  const { useFiltered, setUseFiltered } = useHousesStore();
+
   const { onFilterHouseList } = useHousesHooks();
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(0);
@@ -45,11 +47,13 @@ export function Form({ onClose, type }: FormProps) {
   const onPressApply = useCallback(() => {
     console.log('type', type);
     onFilterHouseList(form, type);
+    setUseFiltered(true);
     onClose();
   }, [form, type]);
 
   function onPressCleanFilter() {
     setFilteredHousesList(housesList);
+    setUseFiltered(true);
     onClose();
   }
 

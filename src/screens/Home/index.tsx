@@ -25,7 +25,10 @@ export function HomeScreen() {
     loadingHousesList,
     filteredHousesList,
     setFilteredHousesList,
-    fromProposals
+    fromProposals,
+    useFiltered,
+    setFromProposals,
+    setUseFiltered
   } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
@@ -49,12 +52,15 @@ export function HomeScreen() {
   // }
 
   function handleOnChooseData() {
-    if(fromProposals){
-      return housesList;
-    }
-    if (filteredHousesList.length > 0) {
+    if(useFiltered){
+      console.log("use filtered")
       return filteredHousesList;
     }
+    if(fromProposals){
+      console.log("use proposals")
+      return housesList;
+    }
+    console.log("use normal")
     return housesList;
   }
 
@@ -78,6 +84,7 @@ export function HomeScreen() {
       console.log('filtro endereço', houses.length);
       console.log('total casas', housesList.length);
     }
+   
   }, [locationsModalVisible]);
 
   return (

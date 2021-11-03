@@ -65,12 +65,6 @@ export function Favorites() {
       });
     }
     
-    setTimeout(() => {
-      if (firstTime) {
-        firstTime = false;
-      }
-    }, 2000);
-
     setFromProposals(true);
   }, []);
 

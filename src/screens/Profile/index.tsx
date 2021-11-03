@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect ,useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CardHightLightText } from '../../components';
 import ProfileItemsList, {
@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
+
 const profileItems: ProfileItemProps[] = [
   {
     title: 'My favorite houses',
@@ -28,16 +29,36 @@ const profileItems: ProfileItemProps[] = [
 ];
 const navigation = useNavigation();
 
+
+
 function logout (){
   AsyncStorage.clear();
   navigation.navigate('Login');
-
 }
 export function Profile() {
+  const [usuario, setUsuario] = useState('');
+
+  useEffect(() => {
+    console.log("oii");
+    AsyncStorage.getItem('email', (err, value) => {
+      if (err) {
+          console.log(err);
+      } else {
+        console.log("valor:  "+value);
+        if(value !== undefined ){
+          console.log("entrou:  "+value);
+          setUsuario(value);
+        }
+      }
+    })
+    setTimeout(() => {
+    }, 2000);
+  }, []);
+  
   return (
     <ScreenContainer>
       <ProfileHeader>
-        <CardHightLightText>Hello, Felipe</CardHightLightText>
+        <CardHightLightText>Hello, {usuario} </CardHightLightText>
         <LogOutView>
           <Icon name="sign-out" size={20} onPress={logout}/>
         </LogOutView>

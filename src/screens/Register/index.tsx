@@ -61,17 +61,19 @@ export function Register({ visible }: RegisterModalProps) {
         AsyncStorage.getItem("idUser").then((value) => {
           console.log("idusuario: " + value);
           if(Number(value)>0){
+            console.log("USUARIO SALVO "+ username);
+            saveData("email",username);
             navigation.navigate('Home');
           }else{
             setTextoErro("Não foi possível realizar o cadastro");
           }
         });
-      }, 100);
+      }, 300);
     }
   }
 
   function handleOnPressLoginText() {
-    navigation.navigate('Login');
+    navigation.navigate('SliderScreens');
   }
 
   return (

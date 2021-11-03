@@ -38,6 +38,7 @@ export function Proposals() {
       } else {
         console.log(value);
         if(!(Number(value) > 0)){
+          
           navigation.navigate('Login');
         }
       }
@@ -64,12 +65,6 @@ export function Proposals() {
       });
     }
     
-    setTimeout(() => {
-      if (firstTime) {
-        firstTime = false;
-      }
-    }, 2000);
-
     setFromProposals(true);
   }, []);
 
