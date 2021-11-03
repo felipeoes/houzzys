@@ -71,8 +71,7 @@ export function Register({ visible }: RegisterModalProps) {
   }
 
   function handleOnPressLoginText() {
-    AsyncStorage.clear();
-    navigation.navigate('Favorites');
+    navigation.navigate('Login');
   }
 
   return (
