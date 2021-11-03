@@ -12,6 +12,14 @@ import {
   RegisterHighlightTextContainer,
 } from './styles';
 
+import {
+  getUserAuth,
+  FilteringParamsProps
+} from '../../services/calls';
+import { getData } from '../../services/stores/db';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 type LoginModalProps = {
   visible: boolean;
   onClose: () => void;
@@ -29,12 +37,45 @@ export function Login({ visible }: LoginModalProps) {
   // call the function that you use to mount the component.
 
   useEffect(() => {
-    handleOnPressLogin();
+    let idUser:number=0;
+    setTimeout(() => {
+      AsyncStorage.getItem("idUser").then((value) => {
+        idUser=Number(value);
+      });
+    }, 1);
+    if(idUser > 0 ){
+      navigation.navigate('Home');
+    }
   }, [isFocused]);
 
-  function handleOnPressLogin() {
-    console.log(password);
-    console.log(username);
+  async function handleOnPressLogin() {
+    let idUser:number=0;
+    setTimeout(() => {
+      AsyncStorage.getItem("idUser").then((value) => {
+        idUser=Number(value);
+      });
+    }, 1);
+
+    if(idUser>0){
+      navigation.navigate('Home');
+    }
+    else if(username!='' && password !=''){
+      const user:FilteringParamsProps={
+        type:"login",
+        email:username,
+        password:password,
+        price:[0,0]
+      }
+      await getUserAuth(user);
+      setTimeout(() => {
+        AsyncStorage.getItem("idUser").then((value) => {
+          console.log("idusuario: " + value);
+          if(Number(value)>0){
+            navigation.navigate('Home');
+          }
+        });
+      }, 100);
+    }
   }
 
   function handleOnPressRegisterText() {
@@ -80,7 +121,7 @@ export function Login({ visible }: LoginModalProps) {
             text="Login"
             mt={30}
             height={70}
-            onPress={() => handleOnPressLogin}
+            onPress={handleOnPressLogin}
           />
         </LoginContainer>
         <DetailText mt={15}>

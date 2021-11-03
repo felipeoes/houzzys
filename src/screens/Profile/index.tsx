@@ -11,6 +11,8 @@ import {
   ProfileHeader,
   ProfileImage,
 } from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const profileItems: ProfileItemProps[] = [
   {
@@ -22,14 +24,20 @@ const profileItems: ProfileItemProps[] = [
     iconName: 'file',
   },
 ];
+const navigation = useNavigation();
 
+function logout (){
+  AsyncStorage.clear();
+  navigation.navigate('Login');
+
+}
 export function Profile() {
   return (
     <ScreenContainer>
       <ProfileHeader>
         <CardHightLightText>Hello, Felipe</CardHightLightText>
         <LogOutView>
-          <Icon name="sign-out" size={20} />
+          <Icon name="sign-out" size={20} onPress={logout}/>
         </LogOutView>
       </ProfileHeader>
       <ProfileImage

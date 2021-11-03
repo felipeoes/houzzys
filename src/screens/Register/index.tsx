@@ -11,6 +11,12 @@ import {
   InputContainer,
   RegisterHighlightTextContainer,
 } from '../Login/styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getData,saveData} from '../../services/stores/db';
+import {
+  FilteringParamsProps,
+  registerUser
+} from '../../services/calls';
 
 type RegisterModalProps = {
   visible: boolean;
@@ -25,14 +31,31 @@ export function Register({ visible }: RegisterModalProps) {
 
   const navigation = useNavigation();
 
-  function handleOnPressRegister() {
-    console.log(username);
-    console.log(password);
-    console.log(passwordConfirm);
+  async function handleOnPressRegister() {
+    console.log("senha: "+password);
+    console.log("user: "+username);
+    if(password == passwordConfirm){
+      if(username == ''){
+        //sinalizar erro username vazio
+        return;
+      }
+      const user:FilteringParamsProps={
+        type:"register",
+        email:username,
+        password:password,
+        price:[0,0]
+      }
+      await registerUser(user);
+      navigation.navigate('Home');
+      
+    }else{
+      //sinalizar erro senhas diferentes
+    }
+   
   }
 
   function handleOnPressLoginText() {
-    navigation.navigate('SliderScreens');
+    navigation.navigate('Login');
   }
 
   return (

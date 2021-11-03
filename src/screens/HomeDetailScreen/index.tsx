@@ -31,6 +31,12 @@ import {
 } from '../../services/stores/db';
 
 import { Alert, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {
+  postProposal,
+  FilteringParamsProps
+} from '../../services/calls';
 
 export function HomeDetailScreen() {
   const { selectedHouse } = useHousesStore();
@@ -96,7 +102,27 @@ export function HomeDetailScreen() {
     detail = splitedDetail.join(' ');
     return detail;
   }
-  function handleOnPressProposalButton() {}
+  function handleOnPressProposalButton() {
+    console.log("handleOnPressProposalButton: ");
+    AsyncStorage.getItem('idUser', (err, value) => {
+      if (err) {
+          console.log(err);
+      } else {
+        console.log(value);
+        if(Number(value)>0){
+          const user:FilteringParamsProps={
+            type:"proposal",
+            price:[houseDetail.list_price_max,0],
+            idUser:value,
+            propertyId:selectedHouse.property_id
+          }
+          postProposal(user);
+          navigation.navigate('Home');
+          
+        }
+      }
+    })
+  }
 
   useEffect(() => {
     fetchHouseDetails();
