@@ -29,7 +29,7 @@ export function Proposals() {
   const { onGetHouses } = useHousesHooks();
 
   const {
-    housesList,
+    filteredHousesList,
     loadingHousesList,
     setLoadingHousesList,
   } = useHousesStore();
@@ -53,24 +53,26 @@ export function Proposals() {
   let firstTime = true;
  
   useEffect(() => {
-    AsyncStorage.getItem('idUser', (err, value) => {
-      if (err) {
-          console.log(err);
-      } else {
-        console.log(value);
-        if(Number(value)>0){
-          let form={
-            beds: '0',
-            price: [],
-            baths: '0',
-            garages: '0',
-            idUser: value
+    if(firstTime){
+
+      AsyncStorage.getItem('idUser', (err, value) => {
+        if (err) {
+            console.log(err);
+        } else {
+          console.log(value);
+          if(Number(value)>0){
+            let form={
+              beds: '0',
+              price: [],
+              baths: '0',
+              garages: '0',
+              idUser: value
+            }
+            onFilterHouseList(form, true);
           }
-          console.log(onFilterHouseList(form, true));
-          
         }
-      }
-    });
+      });
+    }
     
     setTimeout(() => {
       if (firstTime) {
@@ -84,9 +86,9 @@ export function Proposals() {
   return (
     <ScreenContainer>
       <HousesList
-        data={housesList}
+        data={filteredHousesList}
         loading={loadingHousesList}
-        onEndReached={onGetHouses}>
+        onEndReached={()=>{}}>
         <ContentContainer>
           <HeaderContainer>
             <Input
@@ -101,7 +103,7 @@ export function Proposals() {
 
           <TopContainer>
             <TitleContainer>
-              <Title>Find your home here</Title>
+              <Title>See your proposals here</Title>
             </TitleContainer>
             <IconButton
               iconText="Filter"

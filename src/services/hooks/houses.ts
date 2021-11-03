@@ -2,15 +2,15 @@ import {
   FilteringParamsProps,
   getHousesCall,
   getForSaleHousesCall,
-  getForRentHousesCall
+  getForRentHousesCall,
 } from '../calls';
 import { useHousesStore } from '../stores';
-
 export const useHousesHooks = () => {
   const {
     housesList,
     setHousesList,
     setLoadingHousesList,
+    setFilteredHousesList,
     offset,
     setOffset,
     setParams,
@@ -27,9 +27,9 @@ export const useHousesHooks = () => {
       setHousesList(result);
     }
 
-    console.log(housesList);
     setTimeout(() => {
       setLoadingHousesList(false);
+      console.log('received properties = ', result.length);
     }, 3000);
     setOffset(offset + 15);
   }
@@ -41,23 +41,21 @@ export const useHousesHooks = () => {
     setLoadingHousesList(true);
     setParams(params);
 
-    console.log("TO NO FILTER HOUSE LIST");
     console.log(params, type);
-
 
     if (type === false) {
       params.type = 'for_sale';
+
       const result = await getForSaleHousesCall(offset, { ...params });
-      console.log(
-        'entrei no for sale',
-        'quantidade de casas retornadas: ' + result.length,
-      );
-      setHousesList(result);
+
+      setFilteredHousesList(result);
+      // setHousesList(result);
     } else if (type === true) {
       params.type = 'for_rent';
+
       const result = await getForRentHousesCall(offset, { ...params });
-      console.log('for rent' + result.length);
-      setHousesList(result);
+      setFilteredHousesList(result);
+      // setHousesList(result);
     }
 
     setTimeout(() => {

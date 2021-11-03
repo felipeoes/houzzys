@@ -41,10 +41,10 @@ export type PropertiesProps = {
 };
 
 type UserProps={
-  idUser?:number;
-  email?:string;
-  password?:string;
-  proposals?:[{
+  idUser:number;
+  email:string;
+  password:string;
+  proposals:[{
     price?:number;
     propertyId?:string;
   }]
