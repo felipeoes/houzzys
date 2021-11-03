@@ -25,6 +25,7 @@ export function HomeScreen() {
     loadingHousesList,
     filteredHousesList,
     setFilteredHousesList,
+    fromProposals
   } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
@@ -48,6 +49,9 @@ export function HomeScreen() {
   // }
 
   function handleOnChooseData() {
+    if(fromProposals){
+      return housesList;
+    }
     if (filteredHousesList.length > 0) {
       return filteredHousesList;
     }

@@ -40,16 +40,6 @@ export type PropertiesProps = {
   }[];
 };
 
-type UserProps={
-  idUser:number;
-  email:string;
-  password:string;
-  proposals:[{
-    price?:number;
-    propertyId?:string;
-  }]
-}
-
 export type FilteringParamsProps = {
   type?: string | boolean; // tipo de propriedade filtrada pelo usuário: para venda = for_sale(false) e para aluguel = for_rent(true)
   price: Array<Number>; // array que contem o preço mímimo e máximo desejado para alugel ou compra
@@ -60,18 +50,29 @@ export type FilteringParamsProps = {
   password?:string; //senha enviada no momento da authenticação
   idUser?:string; // id usuario enviado para filtrar suas propostas
   propertyId?:string; //id da propriedade usado na hora de criar uma proposta
-
+  isProposal?:string | boolean; //verificar se é proposal ou favorites para retornar a lista correta
 };
 
+/*
+  Função usada para enviar a proposta, sem necessidade de algum retorno
+*/
 function handleOnSendProposal(msg: string) {
   client.write(msg);
 }
 
+/*
+  Função usada para enviar a proposta, sem necessidade de algum retorno
+*/
+function handleOnSendFavorite(msg: string) {
+  client.write(msg);
+}
+
+/*
+  Função usada para verificar se o usuario existe no banco de dados, salvando o idUser dele no AsyncStorage 
+*/
 function handleOnReceiveUser(msg: string): number {
   let user: number=0;
   client.write(msg);
-
-  let received = new MessageBuffer('\n');
 
   client.on('data', (data: string | Buffer) => {
     try {
@@ -88,10 +89,11 @@ function handleOnReceiveUser(msg: string): number {
   return user;
 }
 
+/*
+  Função usada para cadastrar o usuario no banco de dados, salvando o idUser dele no AsyncStorage 
+*/
 function handleOnReceiveRegister(msg: string) {
   client.write(msg);
-
-  let received = new MessageBuffer('\n');
 
   client.on('data', (data: string | Buffer) => {
     try {
@@ -235,6 +237,8 @@ export async function getForRentHousesCall(
     filteringParams.password +
     ';' +
     filteringParams.idUser +
+    ';' +
+    filteringParams.isProposal +
     '\n';
   let properties = handleOnReceiveProperties(mensagem);
 
@@ -310,6 +314,14 @@ export function getLocationsListCall() {
   return locationsList;
 }
 
+
+/*
+  Função responsável por criar o formato da mensagem para solicitar ao servidor
+  a verificação do usuario, retornando o idUser
+
+  Para isso, a função prepara a seguinte mensagem: login
+
+*/
 export async function getUserAuth(
   filteringParams: FilteringParamsProps,
 ){
@@ -335,6 +347,13 @@ export async function getUserAuth(
   handleOnReceiveUser(mensagem);
 }
 
+/*
+  Função responsável por criar o formato da mensagem para solicitar ao servidor
+  a inscrição do usuario
+
+  Para isso, a função prepara a seguinte mensagem: register
+
+*/
 export async function registerUser(
   filteringParams: FilteringParamsProps,
 ) {
@@ -359,6 +378,13 @@ export async function registerUser(
   handleOnReceiveRegister(mensagem);
 }
 
+/*
+  Função responsável por criar o formato da mensagem para solicitar ao servidor
+  o post de uma proposta em um usuario especifico
+
+  Para isso, a função prepara a seguinte mensagem: proposal
+
+*/
 export async function postProposal(
   filteringParams: FilteringParamsProps,
 ) {
@@ -386,4 +412,33 @@ export async function postProposal(
   '\n';
 
   handleOnSendProposal(mensagem);
+}
+
+export async function postFavorite(
+  filteringParams: FilteringParamsProps,
+) {
+  console.log(filteringParams);
+  const mensagem: string =
+  filteringParams.type +
+  ';' +
+  filteringParams.price[0] +
+  ';' +
+  filteringParams.price[1] +
+  ';' +
+  filteringParams.beds +
+  ';' +
+  filteringParams.baths +
+  ';' +
+  filteringParams.garages +
+  ';' +
+  filteringParams.email +
+  ';' +
+  filteringParams.password +
+  ';' +
+  filteringParams.idUser +
+  ';' +
+  filteringParams.propertyId +
+  '\n';
+
+  handleOnSendFavorite(mensagem);
 }

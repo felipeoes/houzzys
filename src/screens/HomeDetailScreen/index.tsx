@@ -12,7 +12,7 @@ import {
   IconButton,
   Loading,
 } from '../../components';
-import { PropertiesProps, getHouseDetailsCall } from '../../services/calls';
+import { PropertiesProps, getHouseDetailsCall, postFavorite } from '../../services/calls';
 import { useHousesStore } from '../../services/stores/index';
 import {
   BottomScreenContainer,
@@ -80,15 +80,37 @@ export function HomeDetailScreen() {
   }, []);
 
   const saveFavoriteHouse = useCallback(async () => {
-    if (favorite) {
-      await removeHouseAsFavorite(selectedHouse.property_id);
-      setFavorite(false);
-      Alert.alert('Removed!', 'Property unfavorited successfully.');
-    } else {
-      await saveHouseAsFavorite(selectedHouse.property_id);
-      setFavorite(true);
-      Alert.alert('Saved!', 'Property favorited successfully.');
-    }
+    console.log("handleOnPressFavoriteButton: ");
+    AsyncStorage.getItem('idUser', (err, value) => {
+      if (err) {
+          console.log(err);
+      } else {
+        console.log(value);
+        if(Number(value)>0){
+          const user:FilteringParamsProps={
+            type:"favorite",
+            price:[],
+            idUser:value,
+            propertyId:selectedHouse.property_id
+          }
+          postFavorite(user);
+          navigation.navigate('Home');
+          
+        }else{
+          navigation.navigate('Login');
+        }
+      }
+    })
+
+    // if (favorite) {
+    //   await removeHouseAsFavorite(selectedHouse.property_id);
+    //   setFavorite(false);
+    //   Alert.alert('Removed!', 'Property unfavorited successfully.');
+    // } else {
+    //   await saveHouseAsFavorite(selectedHouse.property_id);
+    //   setFavorite(true);
+    //   Alert.alert('Saved!', 'Property favorited successfully.');
+    // }
   }, [favorite]);
 
   function prettifyTextDetail(detail: string) {
@@ -119,6 +141,8 @@ export function HomeDetailScreen() {
           postProposal(user);
           navigation.navigate('Home');
           
+        }else{
+          navigation.navigate('Login');
         }
       }
     })

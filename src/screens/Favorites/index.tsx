@@ -25,7 +25,7 @@ import {
 } from '../../services/calls';
 import { useNavigation } from '@react-navigation/native';
 
-export function Proposals() {
+export function Favorites() {
   const { onFilterHouseList } = useHousesHooks();
   const { onGetHouses } = useHousesHooks();
 
@@ -80,7 +80,8 @@ export function Proposals() {
               price: [],
               baths: '0',
               garages: '0',
-              idUser: value
+              idUser: value,
+              isProposal:false
             }
             onFilterHouseList(form, true);
           }
@@ -117,7 +118,7 @@ export function Proposals() {
 
           <TopContainer>
             <TitleContainer>
-              <Title>See your proposals here</Title>
+              <Title>See your favorites here</Title>
             </TitleContainer>
             <IconButton
               iconText="Filter"

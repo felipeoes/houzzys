@@ -10,7 +10,8 @@ import {
   Login,
   Register,
   Profile,
-  Proposals
+  Proposals,
+  Favorites
 } from '../screens';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors } from '../styles/colors';
@@ -75,7 +76,7 @@ export function Navigator() {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Proposals" component={Proposals} />
-
+      <Stack.Screen name="Favorites" component={Favorites} />
     </Stack.Navigator>
   );
 }
