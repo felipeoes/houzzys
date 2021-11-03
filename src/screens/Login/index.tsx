@@ -1,7 +1,7 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, DetailSubTitle, DetailText, Modal } from '../../components';
+import { Button, DetailSubTitle, DetailText, Modal,ErrorText } from '../../components';
 import { ScreenContainer } from '../Home/styles';
 import { ImageBackground, ScreenLine } from '../HomeDetailScreen/styles';
 import {
@@ -16,7 +16,6 @@ import {
   getUserAuth,
   FilteringParamsProps
 } from '../../services/calls';
-import { getData } from '../../services/stores/db';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -32,6 +31,7 @@ export function Login({ visible }: LoginModalProps) {
   const navigation = useNavigation();
   // check if screen is focused
   const isFocused = useIsFocused();
+  const [textoErro, setTextoErro] = useState('');
 
   // listen for isFocused, if useFocused changes
   // call the function that you use to mount the component.
@@ -49,6 +49,16 @@ export function Login({ visible }: LoginModalProps) {
   }, [isFocused]);
 
   async function handleOnPressLogin() {
+    setTextoErro("");
+
+    if(username === ''){
+      setTextoErro("Preencha o email");
+      return;
+    }
+    if(password === ''){
+      setTextoErro("Preencha a senha");
+      return;
+    }
     let idUser:number=0;
     setTimeout(() => {
       AsyncStorage.getItem("idUser").then((value) => {
@@ -72,6 +82,8 @@ export function Login({ visible }: LoginModalProps) {
           console.log("idusuario: " + value);
           if(Number(value)>0){
             navigation.navigate('Home');
+          }else{
+            setTextoErro("Senha ou usuário incorretos");
           }
         });
       }, 100);
@@ -119,11 +131,15 @@ export function Login({ visible }: LoginModalProps) {
           </InputContainer>
           <Button
             text="Login"
-            mt={30}
+            mt={13}
             height={70}
             onPress={handleOnPressLogin}
           />
         </LoginContainer>
+
+        {textoErro!='' ?(<ErrorText textColor="red">{textoErro}</ErrorText>)
+        :null
+        }
         <DetailText mt={15}>
           Don't have an account yet?
           <RegisterHighlightTextContainer onPress={handleOnPressRegisterText}>

@@ -55,6 +55,11 @@ export const DetailText = styled(BaseText)`
   color: black;
   font-family: 'Montserrat-Regular';
 `;
+export const ErrorText = styled(BaseText)`
+  font-size: ${({ theme }) => theme.metrics.px(15)}px;
+  color: red;
+  font-family: 'Montserrat-Regular';
+`;
 export const DetailSectionTitle = styled(BaseText)`
   font-size: ${({ theme }) => theme.metrics.px(20)}px;
   color: black;

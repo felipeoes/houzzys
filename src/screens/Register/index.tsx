@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
-import { Button, DetailSubTitle, DetailText, Modal } from '../../components';
+import { Button, DetailSubTitle, DetailText, Modal,ErrorText } from '../../components';
 import { ScreenContainer } from '../Home/styles';
 import { ImageBackground, ScreenLine } from '../HomeDetailScreen/styles';
 import {
@@ -33,6 +33,8 @@ export function Register({ visible }: RegisterModalProps) {
 
   const navigation = useNavigation();
   async function handleOnPressRegister() {
+    setTextoErro("");
+
     console.log("senha: "+password);
     console.log("user: "+username);
     if(password !== passwordConfirm){
@@ -55,13 +57,22 @@ export function Register({ visible }: RegisterModalProps) {
         price:[0,0]
       }
       await registerUser(user);
-      navigation.navigate('Home');
+      setTimeout(() => {
+        AsyncStorage.getItem("idUser").then((value) => {
+          console.log("idusuario: " + value);
+          if(Number(value)>0){
+            navigation.navigate('Home');
+          }else{
+            setTextoErro("Não foi possível realizar o cadastro");
+          }
+        });
+      }, 100);
     }
-  
   }
 
   function handleOnPressLoginText() {
-    navigation.navigate('Login');
+    AsyncStorage.clear();
+    navigation.navigate('Favorites');
   }
 
   return (
@@ -74,7 +85,7 @@ export function Register({ visible }: RegisterModalProps) {
         title="Register"
         visible={visible}
         onClose={() => handleOnPressLoginText()}
-        width={500}
+        width={580}
         bRight={60}
         bLeft={60}>
         <ScreenLine />
@@ -104,6 +115,7 @@ export function Register({ visible }: RegisterModalProps) {
 
         <LoginContainer>
           <InputContainer>
+          <DetailSubTitle mb={-5}>Confirm Password</DetailSubTitle>
             <LoginInput
               style={styles.shadow}
               placeholder="Confirm your password"
@@ -114,12 +126,12 @@ export function Register({ visible }: RegisterModalProps) {
 
           <Button
             text="Register"
-            mt={30}
+            mt={13}
             height={70}
             onPress={handleOnPressRegister}
           />
         </LoginContainer>
-        {textoErro!='' ?(<DetailText>{textoErro}</DetailText>)
+        {textoErro!='' ?(<ErrorText textColor="red">{textoErro}</ErrorText>)
         :null
         }
         
