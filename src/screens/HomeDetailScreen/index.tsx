@@ -156,10 +156,11 @@ export function HomeDetailScreen() {
                 <DetailSubTitle>
                   U${' '}
                   {Number(
-                    houseDetail.list_price_max
+                    houseDetail.status === 'for_rent'
                       ? houseDetail.list_price_max
                       : houseDetail.list_price,
                   )}
+                  {houseDetail.status === 'for_rent' ? '/mo' : ''}
                 </DetailSubTitle>
               </ProposalCardTextContainer>
 
@@ -182,25 +183,25 @@ export function HomeDetailScreen() {
               <HouseFeatureCard
                 iconName="arrows-alt"
                 featureText={`${
-                  houseDetail.description && houseDetail.description.sqft_max
+                  houseDetail.description && houseDetail.status === 'for_rent'
                     ? houseDetail.description.sqft_max
-                    : 0
+                    : houseDetail.description.sqft
                 } sqfts`}
               />
               <HouseFeatureCard
                 iconName="bed"
                 featureText={`${
-                  houseDetail.description && houseDetail.description.beds_max
+                  houseDetail.description && houseDetail.status === 'for_rent'
                     ? houseDetail.description.beds_max
-                    : 0
+                    : houseDetail.description.beds
                 } beds`}
               />
               <HouseFeatureCard
                 iconName="bath"
                 featureText={`${
-                  houseDetail.description && houseDetail.description.baths_max
+                  houseDetail.description && houseDetail.status === 'for_rent'
                     ? houseDetail.description.baths_max
-                    : 0
+                    : houseDetail.description.baths
                 } baths`}
               />
             </FeaturesContainer>
