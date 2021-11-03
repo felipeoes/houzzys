@@ -184,7 +184,7 @@ export function HomeDetailScreen() {
                 featureText={`${
                   houseDetail.description && houseDetail.description.sqft_max
                     ? houseDetail.description.sqft_max
-                    : 0
+                    : houseDetail.description.sqft
                 } sqfts`}
               />
               <HouseFeatureCard
@@ -192,7 +192,7 @@ export function HomeDetailScreen() {
                 featureText={`${
                   houseDetail.description && houseDetail.description.beds_max
                     ? houseDetail.description.beds_max
-                    : 0
+                    : houseDetail.description.beds
                 } beds`}
               />
               <HouseFeatureCard
@@ -200,7 +200,7 @@ export function HomeDetailScreen() {
                 featureText={`${
                   houseDetail.description && houseDetail.description.baths_max
                     ? houseDetail.description.baths_max
-                    : 0
+                    : houseDetail.description.baths
                 } baths`}
               />
             </FeaturesContainer>
