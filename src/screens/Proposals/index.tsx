@@ -33,7 +33,6 @@ export function Proposals() {
       if (err) {
         console.log(err);
       } else {
-        console.log(value);
         if (!(Number(value) > 0)) {
           navigation.navigate('Login');
         }
@@ -45,7 +44,6 @@ export function Proposals() {
         if (err) {
           console.log(err);
         } else {
-          console.log(value);
           if (Number(value) > 0) {
             let form = {
               beds: '0',
@@ -60,14 +58,10 @@ export function Proposals() {
       });
     }
 
-    setTimeout(() => {
-      if (firstTime) {
-        firstTime = false;
-      }
-    }, 2000);
-
     setFromProposals(true);
   }, []);
+
+  useEffect(() => () => setFromProposals(false), []);
 
   return (
     <ScreenContainer>

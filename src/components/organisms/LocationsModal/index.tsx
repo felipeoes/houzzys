@@ -67,7 +67,6 @@ export function LocationsModal({
       const locs = handleOnGetLocationsList();
       setFilteredLocations(locs);
       setLocations(locs);
-      console.log('ENTREI NO FILTERED');
     }
 
     setTimeout(() => {

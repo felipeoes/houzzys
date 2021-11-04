@@ -18,11 +18,9 @@ export function ProfileItem({ title, iconName }: ProfileItemProps) {
   const navigation = useNavigation();
 
   function handleOnPressItemContainer() {
-    if(iconName === 'home'){
-      console.log("home");
+    if (iconName === 'home') {
       navigation.navigate('Favorites');
-    }else if(iconName === 'file'){
-      console.log("File");
+    } else if (iconName === 'file') {
       navigation.navigate('Proposals');
     }
   }

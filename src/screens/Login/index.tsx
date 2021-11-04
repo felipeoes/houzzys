@@ -21,6 +21,7 @@ import {
 import { getUserAuth, FilteringParamsProps } from '../../services/calls';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { saveData } from '../../services/stores/db';
 
 type LoginModalProps = {
   visible: boolean;
@@ -81,8 +82,8 @@ export function Login({ visible }: LoginModalProps) {
       await getUserAuth(user);
       setTimeout(() => {
         AsyncStorage.getItem('idUser').then(value => {
-          console.log('idusuario: ' + value);
           if (Number(value) > 0) {
+            saveData('email', username);
             navigation.navigate('Home');
           } else {
             setTextoErro('Senha ou usuário incorretos');

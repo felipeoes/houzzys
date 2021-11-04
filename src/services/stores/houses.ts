@@ -23,6 +23,9 @@ type State = {
 
   fromProposals: boolean;
   setFromProposals: (fromProposals: boolean) => void;
+
+  useFiltered: boolean;
+  setUseFiltered: (useFiltered: boolean) => void;
 };
 
 export const useHousesStore = create<State>(set => ({
@@ -46,4 +49,7 @@ export const useHousesStore = create<State>(set => ({
 
   fromProposals: true,
   setFromProposals: fromProposals => set({ fromProposals }),
+
+  useFiltered: false,
+  setUseFiltered: useFiltered => set({ useFiltered }),
 }));

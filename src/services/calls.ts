@@ -49,6 +49,10 @@ export type FilteringParamsProps = {
   password?: string; //senha enviada no momento da authenticação
   idUser?: string; // id usuario enviado para filtrar suas propostas
   propertyId?: string; //id da propriedade usado na hora de criar uma proposta
+<<<<<<< HEAD
+=======
+  isProposal?: string | boolean; //verificar se é proposal ou favorites para retornar a lista correta
+>>>>>>> 87c03dc7eb97f0dac86c927758a454ad6dc7bc55
 };
 
 /*
@@ -66,7 +70,7 @@ function handleOnSendFavorite(msg: string) {
 }
 
 /*
-  Função usada para verificar se o usuario existe no banco de dados, salvando o idUser dele no AsyncStorage 
+  Função usada para verificar se o usuario existe no banco de dados, salvando o idUser dele no AsyncStorage
 */
 function handleOnReceiveUser(msg: string): number {
   let user: number = 0;
@@ -87,7 +91,7 @@ function handleOnReceiveUser(msg: string): number {
 }
 
 /*
-  Função usada para cadastrar o usuario no banco de dados, salvando o idUser dele no AsyncStorage 
+  Função usada para cadastrar o usuario no banco de dados, salvando o idUser dele no AsyncStorage
 */
 function handleOnReceiveRegister(msg: string) {
   client.write(msg);
@@ -168,7 +172,6 @@ export async function getForSaleHousesCall(
   offset: number,
   filteringParams: FilteringParamsProps,
 ): Promise<PropertiesProps[]> {
-  console.log(filteringParams);
   if (filteringParams.price.length === 0) {
     filteringParams.price[0] = 0;
 
@@ -318,7 +321,10 @@ export function getLocationsListCall() {
 
 */
 export async function getUserAuth(filteringParams: FilteringParamsProps) {
+<<<<<<< HEAD
   console.log(filteringParams);
+=======
+>>>>>>> 87c03dc7eb97f0dac86c927758a454ad6dc7bc55
   const mensagem: string =
     filteringParams.type +
     ';' +
@@ -348,7 +354,10 @@ export async function getUserAuth(filteringParams: FilteringParamsProps) {
 
 */
 export async function registerUser(filteringParams: FilteringParamsProps) {
+<<<<<<< HEAD
   console.log(filteringParams);
+=======
+>>>>>>> 87c03dc7eb97f0dac86c927758a454ad6dc7bc55
   const mensagem: string =
     filteringParams.type +
     ';' +
@@ -377,7 +386,10 @@ export async function registerUser(filteringParams: FilteringParamsProps) {
 
 */
 export async function postProposal(filteringParams: FilteringParamsProps) {
+<<<<<<< HEAD
   console.log(filteringParams);
+=======
+>>>>>>> 87c03dc7eb97f0dac86c927758a454ad6dc7bc55
   const mensagem: string =
     filteringParams.type +
     ';' +
@@ -404,7 +416,10 @@ export async function postProposal(filteringParams: FilteringParamsProps) {
 }
 
 export async function postFavorite(filteringParams: FilteringParamsProps) {
+<<<<<<< HEAD
   console.log(filteringParams);
+=======
+>>>>>>> 87c03dc7eb97f0dac86c927758a454ad6dc7bc55
   const mensagem: string =
     filteringParams.type +
     ';' +

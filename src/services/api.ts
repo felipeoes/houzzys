@@ -32,7 +32,6 @@ export const client = new TcpSocket.Socket();
 
 export async function initializeConnection() {
   options.host = await getServerIP();
-  console.log(options.host);
   // inicializando a conexão com o servidor
   client.connect(options, () => {
     client.write('Client connected \n');
