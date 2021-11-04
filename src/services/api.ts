@@ -12,7 +12,7 @@ type ConnectionOptions = {
   reuseAddress?: boolean | undefined;
 };
 
-const host: string = '192.168.1.10';
+const host: string = '192.168.15.30';
 
 const options: ConnectionOptions = {
   port: 29298,

@@ -45,7 +45,6 @@ export function Form({ onClose, type }: FormProps) {
   });
 
   const onPressApply = useCallback(() => {
-    console.log('type', type);
     onFilterHouseList(form, type);
     setUseFiltered(true);
     onClose();

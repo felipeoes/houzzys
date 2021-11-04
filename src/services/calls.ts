@@ -2,8 +2,7 @@ import { client } from './api';
 import { Buffer } from 'buffer';
 
 import MessageBuffer from '../services/buffer/MessageBuffer';
-import {saveData} from '../services/stores/db';
-
+import { saveData } from '../services/stores/db';
 
 /*
   Estrutura TypeScript utilizada para tipar os objetos das propriedades na aplicação.
@@ -46,11 +45,11 @@ export type FilteringParamsProps = {
   beds?: string; // quantidade mínima de quartos desejado na propriedade
   baths?: string; // quantidade mínima de quartos desejado na propriedade
   garages?: string; // quantidade mínima de garagens desejado na propriedade
-  email?:string; //email enviado para authenticação
-  password?:string; //senha enviada no momento da authenticação
-  idUser?:string; // id usuario enviado para filtrar suas propostas
-  propertyId?:string; //id da propriedade usado na hora de criar uma proposta
-  isProposal?:string | boolean; //verificar se é proposal ou favorites para retornar a lista correta
+  email?: string; //email enviado para authenticação
+  password?: string; //senha enviada no momento da authenticação
+  idUser?: string; // id usuario enviado para filtrar suas propostas
+  propertyId?: string; //id da propriedade usado na hora de criar uma proposta
+  isProposal?: string | boolean; //verificar se é proposal ou favorites para retornar a lista correta
 };
 
 /*
@@ -68,39 +67,37 @@ function handleOnSendFavorite(msg: string) {
 }
 
 /*
-  Função usada para verificar se o usuario existe no banco de dados, salvando o idUser dele no AsyncStorage 
+  Função usada para verificar se o usuario existe no banco de dados, salvando o idUser dele no AsyncStorage
 */
 function handleOnReceiveUser(msg: string): number {
-  let user: number=0;
+  let user: number = 0;
   client.write(msg);
 
   client.on('data', (data: string | Buffer) => {
     try {
-      console.log("handleOnReceiveUser"+String(data));
+      console.log('handleOnReceiveUser' + String(data));
 
-      if(Number(data) > 0){
-        saveData("idUser",String(data));
+      if (Number(data) > 0) {
+        saveData('idUser', String(data));
       }
     } catch (error) {
       console.log(error);
     }
-
   });
   return user;
 }
 
 /*
-  Função usada para cadastrar o usuario no banco de dados, salvando o idUser dele no AsyncStorage 
+  Função usada para cadastrar o usuario no banco de dados, salvando o idUser dele no AsyncStorage
 */
 function handleOnReceiveRegister(msg: string) {
   client.write(msg);
 
   client.on('data', (data: string | Buffer) => {
     try {
-
-      console.log("handleOnReceiveRegister " + String(data));
-      if(Number(data) > 0){
-        saveData("idUser",String(data));
+      console.log('handleOnReceiveRegister ' + String(data));
+      if (Number(data) > 0) {
+        saveData('idUser', String(data));
       }
     } catch (error) {
       console.log(error);
@@ -172,7 +169,6 @@ export async function getForSaleHousesCall(
   offset: number,
   filteringParams: FilteringParamsProps,
 ): Promise<PropertiesProps[]> {
-  console.log(filteringParams);
   if (filteringParams.price.length === 0) {
     filteringParams.price[0] = 0;
 
@@ -314,7 +310,6 @@ export function getLocationsListCall() {
   return locationsList;
 }
 
-
 /*
   Função responsável por criar o formato da mensagem para solicitar ao servidor
   a verificação do usuario, retornando o idUser
@@ -322,27 +317,24 @@ export function getLocationsListCall() {
   Para isso, a função prepara a seguinte mensagem: login
 
 */
-export async function getUserAuth(
-  filteringParams: FilteringParamsProps,
-){
-  console.log(filteringParams);
+export async function getUserAuth(filteringParams: FilteringParamsProps) {
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    '\n';
 
   handleOnReceiveUser(mensagem);
 }
@@ -354,27 +346,24 @@ export async function getUserAuth(
   Para isso, a função prepara a seguinte mensagem: register
 
 */
-export async function registerUser(
-  filteringParams: FilteringParamsProps,
-) {
-  console.log(filteringParams);
+export async function registerUser(filteringParams: FilteringParamsProps) {
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    '\n';
   handleOnReceiveRegister(mensagem);
 }
 
@@ -385,60 +374,54 @@ export async function registerUser(
   Para isso, a função prepara a seguinte mensagem: proposal
 
 */
-export async function postProposal(
-  filteringParams: FilteringParamsProps,
-) {
-  console.log(filteringParams);
+export async function postProposal(filteringParams: FilteringParamsProps) {
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  ';' +
-  filteringParams.idUser +
-  ';' +
-  filteringParams.propertyId +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    ';' +
+    filteringParams.idUser +
+    ';' +
+    filteringParams.propertyId +
+    '\n';
 
   handleOnSendProposal(mensagem);
 }
 
-export async function postFavorite(
-  filteringParams: FilteringParamsProps,
-) {
-  console.log(filteringParams);
+export async function postFavorite(filteringParams: FilteringParamsProps) {
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  ';' +
-  filteringParams.idUser +
-  ';' +
-  filteringParams.propertyId +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    ';' +
+    filteringParams.idUser +
+    ';' +
+    filteringParams.propertyId +
+    '\n';
 
   handleOnSendFavorite(mensagem);
 }

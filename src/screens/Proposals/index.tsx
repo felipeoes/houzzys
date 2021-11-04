@@ -6,10 +6,7 @@ import {
   TitleContainer,
   ContentContainer,
 } from './styles';
-import {
-  Title,
-  Loading,
-} from '../../components/index';
+import { Title, Loading } from '../../components/index';
 import { useHousesHooks } from '../../services/hooks';
 import { useHousesStore } from '../../services/stores';
 
@@ -24,56 +21,54 @@ export function Proposals() {
   const {
     filteredHousesList,
     loadingHousesList,
-    setFromProposals
+    setFromProposals,
   } = useHousesStore();
 
   const navigation = useNavigation();
 
   let firstTime = true;
- 
+
   useEffect(() => {
     AsyncStorage.getItem('idUser', (err, value) => {
       if (err) {
-          console.log(err);
+        console.log(err);
       } else {
-        console.log(value);
-        if(!(Number(value) > 0)){
-          
+        if (!(Number(value) > 0)) {
           navigation.navigate('Login');
         }
       }
-    })
+    });
 
-    if(firstTime){
-
+    if (firstTime) {
       AsyncStorage.getItem('idUser', (err, value) => {
         if (err) {
-            console.log(err);
+          console.log(err);
         } else {
-          console.log(value);
-          if(Number(value)>0){
-            let form={
+          if (Number(value) > 0) {
+            let form = {
               beds: '0',
               price: [],
               baths: '0',
               garages: '0',
-              idUser: value
-            }
+              idUser: value,
+            };
             onFilterHouseList(form, true);
           }
         }
       });
     }
-    
+
     setFromProposals(true);
   }, []);
+
+  useEffect(() => () => setFromProposals(false), []);
 
   return (
     <ScreenContainer>
       <HousesList
         data={filteredHousesList}
         loading={loadingHousesList}
-        onEndReached={()=>{}}>
+        onEndReached={() => {}}>
         <ContentContainer>
           <TopContainer>
             <TitleContainer>

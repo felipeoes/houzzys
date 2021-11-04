@@ -1,7 +1,13 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, DetailSubTitle, DetailText, Modal,ErrorText } from '../../components';
+import {
+  Button,
+  DetailSubTitle,
+  DetailText,
+  Modal,
+  ErrorText,
+} from '../../components';
 import { ScreenContainer } from '../Home/styles';
 import { ImageBackground, ScreenLine } from '../HomeDetailScreen/styles';
 import {
@@ -12,10 +18,7 @@ import {
   RegisterHighlightTextContainer,
 } from './styles';
 
-import {
-  getUserAuth,
-  FilteringParamsProps
-} from '../../services/calls';
+import { getUserAuth, FilteringParamsProps } from '../../services/calls';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { saveData } from '../../services/stores/db';
@@ -38,55 +41,52 @@ export function Login({ visible }: LoginModalProps) {
   // call the function that you use to mount the component.
 
   useEffect(() => {
-    let idUser:number=0;
+    let idUser: number = 0;
     setTimeout(() => {
-      AsyncStorage.getItem("idUser").then((value) => {
-        idUser=Number(value);
+      AsyncStorage.getItem('idUser').then(value => {
+        idUser = Number(value);
       });
     }, 1);
-    if(idUser > 0 ){
+    if (idUser > 0) {
       navigation.navigate('Home');
     }
   }, [isFocused]);
 
   async function handleOnPressLogin() {
-    setTextoErro("");
+    setTextoErro('');
 
-    if(username === ''){
-      setTextoErro("Preencha o email");
+    if (username === '') {
+      setTextoErro('Preencha o email');
       return;
     }
-    if(password === ''){
-      setTextoErro("Preencha a senha");
+    if (password === '') {
+      setTextoErro('Preencha a senha');
       return;
     }
-    let idUser:number=0;
+    let idUser: number = 0;
     setTimeout(() => {
-      AsyncStorage.getItem("idUser").then((value) => {
-        idUser=Number(value);
+      AsyncStorage.getItem('idUser').then(value => {
+        idUser = Number(value);
       });
     }, 1);
 
-    if(idUser>0){
+    if (idUser > 0) {
       navigation.navigate('Home');
-    }
-    else if(username!='' && password !=''){
-      const user:FilteringParamsProps={
-        type:"login",
-        email:username,
-        password:password,
-        price:[0,0]
-      }
+    } else if (username != '' && password != '') {
+      const user: FilteringParamsProps = {
+        type: 'login',
+        email: username,
+        password: password,
+        price: [0, 0],
+      };
       await getUserAuth(user);
       setTimeout(() => {
-        AsyncStorage.getItem("idUser").then((value) => {
-          console.log("idusuario: " + value);
-          if(Number(value)>0){
-            console.log("USUARIO SALVO "+ username);
-            saveData("email",username);
+        AsyncStorage.getItem('idUser').then(value => {
+          if (Number(value) > 0) {
+            saveData('email', username);
             navigation.navigate('Home');
-          }else{
-            setTextoErro("Senha ou usuário incorretos");
+          } else {
+            setTextoErro('Senha ou usuário incorretos');
           }
         });
       }, 100);
@@ -140,9 +140,9 @@ export function Login({ visible }: LoginModalProps) {
           />
         </LoginContainer>
 
-        {textoErro!='' ?(<ErrorText textColor="red">{textoErro}</ErrorText>)
-        :null
-        }
+        {textoErro != '' ? (
+          <ErrorText textColor="red">{textoErro}</ErrorText>
+        ) : null}
         <DetailText mt={15}>
           Don't have an account yet?
           <RegisterHighlightTextContainer onPress={handleOnPressRegisterText}>

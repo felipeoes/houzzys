@@ -25,15 +25,12 @@ export function HomeScreen() {
     loadingHousesList,
     filteredHousesList,
     setFilteredHousesList,
-    fromProposals,
     useFiltered,
-    setFromProposals,
-    setUseFiltered
+    setUseFiltered,
   } = useHousesStore();
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [locationsModalVisible, setLocationsModalVisible] = useState(false);
   const [valueInput, setValueInput] = useState('');
-  // const [filteredHouses, setFilteredHouses] = useState(housesList);
 
   const toggleFilterModal = useCallback(() => {
     setFilterModalVisible(prevState => !prevState);
@@ -47,44 +44,42 @@ export function HomeScreen() {
     setValueInput(value);
   }
 
-  // function handleOnFilterHouses(houses: PropertiesProps[]) {
-  //   setFilteredHouses(houses);
-  // }
-
-  function handleOnChooseData() {
-    if(useFiltered){
-      console.log("use filtered")
+  const handleOnChooseData = useCallback(() => {
+    if (useFiltered) {
+      console.log('use filtered');
       return filteredHousesList;
     }
-    if(fromProposals){
-      console.log("use proposals")
-      return housesList;
-    }
-    console.log("use normal")
+
+    console.log('use normal');
+
     return housesList;
-  }
+  }, [housesList, filteredHousesList]);
 
   useEffect(() => {
     if (locationsModalVisible === false && valueInput !== '') {
-      console.log('entrei para o filtro');
       console.log(valueInput);
       const houses = housesList.filter(house => {
-        const fullAddress =
-          house.location.address.city + ', ' + house.location.address.state;
+        if (house.status === 'for_rent') {
+          const fullAddressForRent =
+            house.location.address.line +
+            ', ' +
+            house.location.address.city +
+            ', ' +
+            house.location.address.state;
 
-        console.log('aquii', fullAddress);
-
-        return fullAddress === valueInput;
+          return fullAddressForRent === valueInput;
+        } else {
+          const fullAddressForSale =
+            house.location.address.city + ', ' + house.location.address.state;
+          return fullAddressForSale === valueInput;
+        }
       });
 
       if (houses.length > 0) {
         setFilteredHousesList(houses);
+        setUseFiltered(true);
       }
-
-      console.log('filtro endereço', houses.length);
-      console.log('total casas', housesList.length);
     }
-   
   }, [locationsModalVisible]);
 
   return (

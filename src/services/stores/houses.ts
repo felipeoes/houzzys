@@ -50,6 +50,6 @@ export const useHousesStore = create<State>(set => ({
   fromProposals: true,
   setFromProposals: fromProposals => set({ fromProposals }),
 
-  useFiltered: true,
+  useFiltered: false,
   setUseFiltered: useFiltered => set({ useFiltered }),
 }));

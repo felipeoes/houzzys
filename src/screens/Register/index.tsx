@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
-import { Button, DetailSubTitle, DetailText, Modal,ErrorText } from '../../components';
+import {
+  Button,
+  DetailSubTitle,
+  DetailText,
+  Modal,
+  ErrorText,
+} from '../../components';
 import { ScreenContainer } from '../Home/styles';
 import { ImageBackground, ScreenLine } from '../HomeDetailScreen/styles';
 import {
@@ -12,11 +18,8 @@ import {
   RegisterHighlightTextContainer,
 } from '../Login/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getData,saveData} from '../../services/stores/db';
-import {
-  FilteringParamsProps,
-  registerUser
-} from '../../services/calls';
+import { getData, saveData } from '../../services/stores/db';
+import { FilteringParamsProps, registerUser } from '../../services/calls';
 
 type RegisterModalProps = {
   visible: boolean;
@@ -30,42 +33,37 @@ export function Register({ visible }: RegisterModalProps) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [textoErro, setTextoErro] = useState('');
 
-
   const navigation = useNavigation();
   async function handleOnPressRegister() {
-    setTextoErro("");
+    setTextoErro('');
 
-    console.log("senha: "+password);
-    console.log("user: "+username);
-    if(password !== passwordConfirm){
-      setTextoErro("As senhas estão diferentes");
+    if (password !== passwordConfirm) {
+      setTextoErro('As senhas estão diferentes');
       return;
     }
-    if(username === ''){
-      setTextoErro("Preencha o email");
+    if (username === '') {
+      setTextoErro('Preencha o email');
       return;
     }
-    if(password === ''){
-      setTextoErro("Preencha a senha");
+    if (password === '') {
+      setTextoErro('Preencha a senha');
       return;
     }
-    if(textoErro === ""){
-      const user:FilteringParamsProps={
-        type:"register",
-        email:username,
-        password:password,
-        price:[0,0]
-      }
+    if (textoErro === '') {
+      const user: FilteringParamsProps = {
+        type: 'register',
+        email: username,
+        password: password,
+        price: [0, 0],
+      };
       await registerUser(user);
       setTimeout(() => {
-        AsyncStorage.getItem("idUser").then((value) => {
-          console.log("idusuario: " + value);
-          if(Number(value)>0){
-            console.log("USUARIO SALVO "+ username);
-            saveData("email",username);
+        AsyncStorage.getItem('idUser').then(value => {
+          if (Number(value) > 0) {
+            saveData('email', username);
             navigation.navigate('Home');
-          }else{
-            setTextoErro("Não foi possível realizar o cadastro");
+          } else {
+            setTextoErro('Não foi possível realizar o cadastro');
           }
         });
       }, 300);
@@ -116,7 +114,7 @@ export function Register({ visible }: RegisterModalProps) {
 
         <LoginContainer>
           <InputContainer>
-          <DetailSubTitle mb={-5}>Confirm Password</DetailSubTitle>
+            <DetailSubTitle mb={-5}>Confirm Password</DetailSubTitle>
             <LoginInput
               style={styles.shadow}
               placeholder="Confirm your password"
@@ -132,10 +130,10 @@ export function Register({ visible }: RegisterModalProps) {
             onPress={handleOnPressRegister}
           />
         </LoginContainer>
-        {textoErro!='' ?(<ErrorText textColor="red">{textoErro}</ErrorText>)
-        :null
-        }
-        
+        {textoErro != '' ? (
+          <ErrorText textColor="red">{textoErro}</ErrorText>
+        ) : null}
+
         <DetailText mt={15}>
           Already have an account?
           <RegisterHighlightTextContainer onPress={handleOnPressLoginText}>
