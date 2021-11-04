@@ -1,5 +1,12 @@
 import TcpSocket from 'react-native-tcp-socket';
 
+async function getServerIP() {
+  const ip = fetch('https://shielded-fjord-54509.herokuapp.com/')
+    .then(T => T.text())
+    .then(ip => ip);
+  return ip;
+}
+
 /*
   Estrutura responsável pela tipagem do objeto que contêm as informações necessárias
   para conexão do socket no lado do cliente via TCP com o socket no lado do servidor.
@@ -12,7 +19,7 @@ type ConnectionOptions = {
   reuseAddress?: boolean | undefined;
 };
 
-const host: string = '192.168.0.39';
+const host = 'localhost';
 
 const options: ConnectionOptions = {
   port: 29298,
@@ -23,7 +30,9 @@ const options: ConnectionOptions = {
 // criação da instância de um Socket TCP para requisições no lado do cliente
 export const client = new TcpSocket.Socket();
 
-export function initializeConnection() {
+export async function initializeConnection() {
+  options.host = await getServerIP();
+  console.log(options.host);
   // inicializando a conexão com o servidor
   client.connect(options, () => {
     client.write('Client connected \n');

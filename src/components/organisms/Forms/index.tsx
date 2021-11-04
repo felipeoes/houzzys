@@ -46,7 +46,7 @@ export function Form({ onClose, type }: FormProps) {
     console.log('type', type);
     onFilterHouseList(form, type);
     onClose();
-  }, [form, type]);
+  }, [form, type, priceMin, priceMax]);
 
   function onPressCleanFilter() {
     setFilteredHousesList(housesList);

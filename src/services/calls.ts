@@ -310,10 +310,6 @@ export function getLocationsListCall() {
   return locationsList;
 }
 
-<<<<<<< HEAD
-export async function getUserAuth(filteringParams: FilteringParamsProps) {
-=======
-
 /*
   Função responsável por criar o formato da mensagem para solicitar ao servidor
   a verificação do usuario, retornando o idUser
@@ -321,10 +317,7 @@ export async function getUserAuth(filteringParams: FilteringParamsProps) {
   Para isso, a função prepara a seguinte mensagem: login
 
 */
-export async function getUserAuth(
-  filteringParams: FilteringParamsProps,
-){
->>>>>>> e361787fefc88cecb259ade104755d60daa03eba
+export async function getUserAuth(filteringParams: FilteringParamsProps) {
   console.log(filteringParams);
   const mensagem: string =
     filteringParams.type +
@@ -347,9 +340,6 @@ export async function getUserAuth(
   handleOnReceiveUser(mensagem);
 }
 
-<<<<<<< HEAD
-export async function registerUser(filteringParams: FilteringParamsProps) {
-=======
 /*
   Função responsável por criar o formato da mensagem para solicitar ao servidor
   a inscrição do usuario
@@ -357,10 +347,7 @@ export async function registerUser(filteringParams: FilteringParamsProps) {
   Para isso, a função prepara a seguinte mensagem: register
 
 */
-export async function registerUser(
-  filteringParams: FilteringParamsProps,
-) {
->>>>>>> e361787fefc88cecb259ade104755d60daa03eba
+export async function registerUser(filteringParams: FilteringParamsProps) {
   console.log(filteringParams);
   const mensagem: string =
     filteringParams.type +
@@ -382,9 +369,6 @@ export async function registerUser(
   handleOnReceiveRegister(mensagem);
 }
 
-<<<<<<< HEAD
-export async function postProposal(filteringParams: FilteringParamsProps) {
-=======
 /*
   Função responsável por criar o formato da mensagem para solicitar ao servidor
   o post de uma proposta em um usuario especifico
@@ -392,10 +376,7 @@ export async function postProposal(filteringParams: FilteringParamsProps) {
   Para isso, a função prepara a seguinte mensagem: proposal
 
 */
-export async function postProposal(
-  filteringParams: FilteringParamsProps,
-) {
->>>>>>> e361787fefc88cecb259ade104755d60daa03eba
+export async function postProposal(filteringParams: FilteringParamsProps) {
   console.log(filteringParams);
   const mensagem: string =
     filteringParams.type +
@@ -421,35 +402,30 @@ export async function postProposal(
 
   handleOnSendProposal(mensagem);
 }
-<<<<<<< HEAD
-=======
 
-export async function postFavorite(
-  filteringParams: FilteringParamsProps,
-) {
+export async function postFavorite(filteringParams: FilteringParamsProps) {
   console.log(filteringParams);
   const mensagem: string =
-  filteringParams.type +
-  ';' +
-  filteringParams.price[0] +
-  ';' +
-  filteringParams.price[1] +
-  ';' +
-  filteringParams.beds +
-  ';' +
-  filteringParams.baths +
-  ';' +
-  filteringParams.garages +
-  ';' +
-  filteringParams.email +
-  ';' +
-  filteringParams.password +
-  ';' +
-  filteringParams.idUser +
-  ';' +
-  filteringParams.propertyId +
-  '\n';
+    filteringParams.type +
+    ';' +
+    filteringParams.price[0] +
+    ';' +
+    filteringParams.price[1] +
+    ';' +
+    filteringParams.beds +
+    ';' +
+    filteringParams.baths +
+    ';' +
+    filteringParams.garages +
+    ';' +
+    filteringParams.email +
+    ';' +
+    filteringParams.password +
+    ';' +
+    filteringParams.idUser +
+    ';' +
+    filteringParams.propertyId +
+    '\n';
 
   handleOnSendFavorite(mensagem);
 }
->>>>>>> e361787fefc88cecb259ade104755d60daa03eba
